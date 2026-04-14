@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인사이트 | 큐브파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@900&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2557; --blue: #1a3a8f; --indigo: #3b5bdb;
+  --indigo-light: #eef2ff; --indigo-mid: #c5d0fa; --gold: #d4a847;
+  --text: #1a1a2e; --text-muted: #5c6070; --text-light: #9199ab;
+  --bg: #ffffff; --bg2: #f8f9fc; --bg3: #f1f3fa;
+  --border: rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(15,37,87,0.07);
+  --shadow-md: 0 6px 32px rgba(15,37,87,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; font-size: 16px; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+h1,h2,h3 { font-family: 'Noto Serif KR', serif; font-weight: 600; line-height: 1.35; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; }
+.nav-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 32px; }
+.logo { font-family: 'Gothic A1', sans-serif; font-size: 19px; font-weight: 900; color: var(--navy); white-space: nowrap; display: flex; align-items: center; }
+.logo span { color: var(--indigo); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--indigo); font-weight: 500; }
+.nav-cta { background: var(--indigo); color: #fff; padding: 9px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+
+/* ARTICLE HERO */
+.article-hero {
+  background: linear-gradient(145deg, #e8eeff 0%, #f4f6ff 60%, #fafbff 100%);
+  padding: 48px 0 44px;
+  border-bottom: 1px solid var(--indigo-mid);
+}
+.article-hero .back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--indigo); margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+.article-hero .back-link:hover { opacity: 0.7; }
+.cat-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.07em; display: inline-block; }
+.cat-badge.tax { background: var(--indigo-light); color: var(--indigo); }
+.cat-badge.setup { background: #e8f5e9; color: #2e7d32; }
+.cat-badge.audit { background: #fff3e0; color: #e65100; }
+.cat-badge.news { background: #fce4ec; color: #c62828; }
+.cat-badge.qa { background: #f3e5f5; color: #6a1b9a; }
+.article-hero h1 {
+  font-size: clamp(22px, 3.5vw, 32px); color: var(--navy);
+  margin: 16px 0 16px; line-height: 1.45; max-width: 720px;
+}
+.article-meta {
+  font-size: 14px; color: var(--text-muted);
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.article-meta .divider { width: 1px; height: 14px; background: var(--border); }
+
+/* ARTICLE BODY */
+.article-content {
+  max-width: 760px; margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.article-body {
+  font-size: 16px; line-height: 2; color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.article-body p { margin-bottom: 20px; }
+.article-body h2 {
+  font-size: 20px; color: var(--navy); margin: 40px 0 16px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.article-body h3 { font-size: 17px; color: var(--navy); margin: 32px 0 12px; }
+.article-body ul, .article-body ol { margin: 12px 0 20px 24px; }
+.article-body li { margin-bottom: 6px; }
+.article-body blockquote {
+  border-left: 3px solid var(--indigo); background: var(--indigo-light);
+  padding: 16px 20px; margin: 20px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 15px; color: var(--text-muted);
+}
+.article-body strong { color: var(--navy); }
+
+/* BOTTOM NAV */
+.article-bottom {
+  max-width: 760px; margin: 0 auto; padding: 0 24px 60px;
+}
+.bottom-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 32px; border-top: 1px solid var(--border);
+}
+.bottom-nav a {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--indigo); font-weight: 500;
+  padding: 10px 20px; border: 1px solid var(--indigo);
+  border-radius: var(--radius-sm); transition: all 0.2s;
+}
+.bottom-nav a:hover { background: var(--indigo); color: #fff; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--navy); padding: 48px 24px; text-align: center;
+}
+.cta-banner h3 {
+  font-size: 20px; color: #fff; margin-bottom: 10px;
+}
+.cta-banner p { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+.cta-banner a {
+  display: inline-block; background: var(--indigo); color: #fff;
+  padding: 12px 28px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500; transition: background 0.2s;
+}
+.cta-banner a:hover { background: #2a4bc7; }
+
+/* FOOTER */
+footer { background: #0a1a3d; padding: 40px 0 24px; }
+.footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; margin-bottom: 28px; flex-wrap: wrap; }
+.footer-logo { font-family: 'Gothic A1', sans-serif; font-size: 18px; font-weight: 900; color: #fff; }
+.footer-logo span { color: var(--gold); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 6px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* LOADING */
+.loading-state { text-align: center; padding: 120px 24px; }
+.spinner { display: inline-block; width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--indigo); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-state { text-align: center; padding: 120px 24px; }
+.error-state h2 { font-size: 20px; color: var(--navy); margin-bottom: 12px; }
+.error-state p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+.error-state a { color: var(--indigo); font-weight: 500; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .article-hero h1 { font-size: 22px; }
+  .article-body { font-size: 15px; }
+  .bottom-nav { flex-direction: column; gap: 12px; }
+  .bottom-nav a { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cubepartners.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" style="margin-right:6px;flex-shrink:0;"><polygon points="11,3 19,8 19,16 11,21 3,16 3,8" fill="none" stroke="#3b5bdb" stroke-width="1.2"/><line x1="11" y1="3" x2="11" y2="21" stroke="#3b5bdb" stroke-width="0.8"/><line x1="3" y1="8" x2="19" y2="16" stroke="#3b5bdb" stroke-width="0.8"/><line x1="19" y1="8" x2="3" y2="16" stroke="#3b5bdb" stroke-width="0.8"/></svg>큐브<span>파트너스</span>
+    </a>
+    <div class="nav-links">
+      <a href="cubepartners.html#services">서비스</a>
+      <a href="about.html">전문가 소개</a>
+      <a href="insight.html" class="active">인사이트</a>
+      <a href="board.html">문의</a>
+      <a href="cubepartners.html#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="location.href='cubepartners.html'">무료 상담 신청</div>
+  </div>
+</nav>
+
+<!-- Loading State -->
+<div id="loadingState" class="loading-state">
+  <div class="spinner"></div>
+  <p style="margin-top:16px; font-size:14px; color:var(--text-light);">글을 불러오는 중...</p>
+</div>
+
+<!-- Error State -->
+<div id="errorState" class="error-state" style="display:none;">
+  <h2>글을 찾을 수 없습니다</h2>
+  <p>삭제되었거나 존재하지 않는 글입니다.</p>
+  <a href="insight.html">← 인사이트 목록으로 돌아가기</a>
+</div>
+
+<!-- Article Content (hidden until loaded) -->
+<div id="articleWrapper" style="display:none;">
+
+  <section class="article-hero">
+    <div class="container">
+      <a href="insight.html" class="back-link">← 인사이트 목록</a>
+      <div id="heroBadge"></div>
+      <h1 id="heroTitle"></h1>
+      <div class="article-meta">
+        <span id="heroAuthor"></span>
+        <div class="divider"></div>
+        <span id="heroDate"></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="article-content">
+    <div class="article-body" id="articleBody"></div>
+  </div>
+
+  <div class="article-bottom">
+    <div class="bottom-nav">
+      <a href="insight.html">← 목록으로 돌아가기</a>
+      <a href="board.html">문의하기 →</a>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <h3>전문가에게 직접 물어보세요</h3>
+    <p>개인투자조합 관련 세무·회계·행정 궁금한 점이 있으시면 무료 상담을 신청하세요.</p>
+    <a href="cubepartners.html">무료 상담 신청</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-logo">큐브<span>파트너스</span></div><div class="footer-desc">개인투자조합 전문 세무·회계·행정 서비스</div></div>
+      <div class="footer-links"><a href="cubepartners.html">홈</a><a href="about.html">전문가 소개</a><a href="insight.html">인사이트</a><a href="board.html">문의</a><a href="cubepartners.html#faq">FAQ</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 큐브파트너스. All rights reserved.</p><p>대표: 박성수 | 010-3693-4303</p></div>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyC7TM-70pnIavXhoqzkYaE_UQIROcBMitw",
+  authDomain: "cubepartners-f508f.firebaseapp.com",
+  projectId: "cubepartners-f508f",
+  storageBucket: "cubepartners-f508f.firebasestorage.app",
+  messagingSenderId: "280512269415",
+  appId: "1:280512269415:web:14d96b02be77707e4458c2"
+});
+var db = firebase.firestore();
+
+var catCfg = {
+  tax:   { name: '세무·절세', cls: 'tax' },
+  setup: { name: '설립·인증', cls: 'setup' },
+  audit: { name: '감사·결산', cls: 'audit' },
+  news:  { name: '법령 개정', cls: 'news' },
+  qa:    { name: 'Q&A',       cls: 'qa' }
+};
+
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+
+// Convert plain text to formatted HTML
+function formatBody(text) {
+  if (!text) return '<p style="color:var(--text-light);">본문 내용이 아직 등록되지 않았습니다.</p>';
+
+  // Split by double newline for paragraphs
+  var paragraphs = text.split(/\n\n+/);
+  var html = '';
+
+  paragraphs.forEach(function(para) {
+    para = para.trim();
+    if (!para) return;
+
+    // Check for heading patterns (## or ###)
+    if (para.startsWith('### ')) {
+      html += '<h3>' + esc(para.substring(4)) + '</h3>';
+    } else if (para.startsWith('## ')) {
+      html += '<h2>' + esc(para.substring(3)) + '</h2>';
+    } else if (para.startsWith('> ')) {
+      html += '<blockquote>' + esc(para.substring(2)) + '</blockquote>';
+    } else {
+      // Regular paragraph - convert single newlines to <br>
+      var lines = para.split('\n');
+      var processed = lines.map(function(line) {
+        line = line.trim();
+        // Bold text: **text**
+        line = esc(line).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        return line;
+      }).join('<br>');
+      html += '<p>' + processed + '</p>';
+    }
+  });
+
+  return html;
+}
+
+// Load article
+async function loadArticle() {
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+
+  if (!id) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+    return;
+  }
+
+  try {
+    var doc = await db.collection('articles').doc(id).get();
+
+    if (!doc.exists) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'block';
+      return;
+    }
+
+    var d = doc.data();
+    var cat = catCfg[d.category] || catCfg.tax;
+
+    // Update page title
+    document.title = d.title + ' | 큐브파트너스 인사이트';
+
+    // Fill hero section
+    document.getElementById('heroBadge').innerHTML = '<span class="cat-badge ' + cat.cls + '">' + cat.name + '</span>';
+    document.getElementById('heroTitle').textContent = d.title;
+    document.getElementById('heroAuthor').textContent = d.author || '';
+    document.getElementById('heroDate').textContent = d.date || '';
+
+    // Fill body
+    document.getElementById('articleBody').innerHTML = formatBody(d.body);
+
+    // Show article, hide loading
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('articleWrapper').style.display = 'block';
+
+  } catch (err) {
+    console.error('Article load error:', err);
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadArticle);
+</script>
+</body>
+</html>

@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>큐브파트너스 | 개인투자조합 전문 세무·회계</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@900&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2557;
+  --blue: #1a3a8f;
+  --indigo: #3b5bdb;
+  --indigo-light: #eef2ff;
+  --indigo-mid: #c5d0fa;
+  --gold: #d4a847;
+  --text: #1a1a2e;
+  --text-muted: #5c6070;
+  --text-light: #9199ab;
+  --bg: #ffffff;
+  --bg2: #f8f9fc;
+  --bg3: #f1f3fa;
+  --border: rgba(0,0,0,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(15,37,87,0.07);
+  --shadow-md: 0 4px 32px rgba(15,37,87,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3 { font-family: 'Noto Serif KR', serif; font-weight: 600; line-height: 1.35; }
+h1 { font-size: clamp(26px, 4vw, 38px); }
+h2 { font-size: clamp(20px, 3vw, 28px); }
+h3 { font-size: 17px; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── LAYOUT ── */
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 72px 0; }
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--indigo); text-transform: uppercase; margin-bottom: 8px;
+}
+.section-title { margin-bottom: 40px; }
+.section-title h2 { margin-bottom: 8px; }
+.section-title p { color: var(--text-muted); font-size: 15px; max-width: 520px; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 1040px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px; gap: 32px;
+}
+.logo {
+  font-family: 'Gothic A1', sans-serif;
+  font-size: 19px; font-weight: 900;
+  color: var(--navy); white-space: nowrap;
+}
+.logo span { color: var(--indigo); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-size: 14px; color: var(--text-muted); font-weight: 400;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--indigo); color: #fff;
+  padding: 9px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: background 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.nav-cta:hover { background: var(--blue); transform: translateY(-1px); }
+
+/* mobile nav toggle */
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.nav-toggle span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+/* ── HERO ── */
+.hero {
+  padding: 80px 0 72px;
+  background: linear-gradient(145deg, #e8eeff 0%, #f4f6ff 40%, #fafbff 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -120px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(59,91,219,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1040px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; border: 1px solid var(--indigo-mid);
+  color: var(--indigo); font-size: 12px; font-weight: 500;
+  padding: 5px 12px; border-radius: 20px; margin-bottom: 20px;
+}
+.hero-badge::before { content: '✦'; font-size: 10px; }
+.hero h1 { color: var(--navy); margin-bottom: 16px; }
+.hero h1 em { color: var(--indigo); font-style: normal; }
+.hero-sub {
+  color: var(--text-muted); font-size: 15px; line-height: 1.75;
+  margin-bottom: 32px; max-width: 440px;
+}
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--indigo); color: #fff;
+  padding: 12px 24px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  border: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,91,219,0.3); }
+.btn-outline {
+  background: transparent; color: var(--navy);
+  padding: 12px 24px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  border: 1.5px solid rgba(15,37,87,0.2);
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: var(--indigo); background: var(--indigo-light); }
+
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 44px;
+  padding-top: 28px; border-top: 1px solid rgba(15,37,87,0.1);
+}
+.stat .num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 28px; font-weight: 600; color: var(--navy);
+  line-height: 1;
+}
+.stat .num span { color: var(--indigo); }
+.stat .label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* hero right: profile card */
+.hero-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+.profile-img {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--indigo) 0%, var(--navy) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 24px; color: #fff; font-weight: 600;
+  margin-bottom: 16px;
+}
+.profile-name { font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.profile-title { font-size: 13px; color: var(--indigo); font-weight: 500; margin-bottom: 16px; }
+.profile-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.tag {
+  font-size: 11px; font-weight: 500;
+  background: var(--bg3); color: var(--text-muted);
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--border);
+}
+.profile-quote {
+  font-size: 13px; color: var(--text-muted); line-height: 1.65;
+  padding: 14px; background: var(--bg2);
+  border-left: 3px solid var(--indigo); border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+/* ── SERVICES ── */
+.services { background: var(--bg); }
+.service-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.service-card {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+  cursor: default;
+}
+.service-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--indigo-mid);
+  transform: translateY(-3px);
+}
+.service-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--indigo-light); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+}
+.service-card h3 { color: var(--navy); margin-bottom: 8px; }
+.service-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px; }
+.service-list { list-style: none; }
+.service-list li {
+  font-size: 13px; color: var(--text-muted);
+  padding: 3px 0; display: flex; align-items: center; gap: 6px;
+}
+.service-list li::before { content: '—'; color: var(--indigo); font-weight: 700; flex-shrink: 0; }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--navy); padding: 48px 0;
+}
+.stats-inner {
+  max-width: 1040px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; text-align: center;
+}
+.stats-inner > div { padding: 0 20px; }
+.stats-inner > div + div { border-left: 1px solid rgba(255,255,255,0.1); }
+.stat-big {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 36px; font-weight: 600; color: #fff; line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-big span { color: var(--gold); }
+.stat-desc { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* ── CALCULATOR ── */
+.calculator { background: var(--bg2); }
+.calc-wrapper {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.calc-info p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+.calc-disclaimer { font-size: 12px; color: var(--text-light); padding: 12px; background: #fff; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+
+.calc-box {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.calc-box h3 { font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 20px; }
+
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.form-group select,
+.form-group input {
+  width: 100%; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text);
+  background: var(--bg2); outline: none;
+  transition: border-color 0.2s;
+}
+.form-group select:focus,
+.form-group input:focus { border-color: var(--indigo); background: #fff; }
+
+.calc-btn {
+  width: 100%; padding: 12px;
+  background: var(--indigo); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s;
+}
+.calc-btn:hover { background: var(--blue); }
+
+.calc-result {
+  margin-top: 20px; padding: 16px;
+  background: var(--indigo-light);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.calc-result.show { display: block; }
+.result-label { font-size: 12px; color: var(--indigo); font-weight: 500; margin-bottom: 4px; }
+.result-amount {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 26px; font-weight: 600; color: var(--navy);
+}
+.result-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+/* ── BLOG ── */
+.blog-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.blog-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden; background: #fff;
+  transition: box-shadow 0.25s, transform 0.2s;
+  cursor: pointer;
+}
+.blog-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.blog-thumb-img {
+  height: 140px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+.blog-body { padding: 20px; }
+.blog-tag {
+  font-size: 11px; font-weight: 700; color: var(--indigo);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;
+}
+.blog-card h3 { font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; line-height: 1.5; }
+.blog-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+.blog-meta { font-size: 12px; color: var(--text-light); display: flex; justify-content: space-between; }
+.read-more { font-size: 13px; color: var(--indigo); font-weight: 500; }
+
+/* ── PROCESS ── */
+.process { background: var(--bg); }
+.process-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute; top: 28px; left: 12.5%; right: 12.5%;
+  height: 1px; background: var(--indigo-mid);
+}
+.process-step { text-align: center; padding: 0 16px; position: relative; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--indigo-light); border: 2px solid var(--indigo-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px; font-weight: 600; color: var(--indigo);
+  margin: 0 auto 16px; position: relative; z-index: 1;
+  background: #fff;
+}
+.process-step h3 { font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+.process-step p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* ── FAQ ── */
+.faq { background: var(--bg2); }
+.faq-list { max-width: 720px; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; cursor: pointer;
+  font-size: 15px; font-weight: 500; color: var(--navy);
+  gap: 16px;
+}
+.faq-q .icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--indigo-light); color: var(--indigo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  transition: transform 0.25s;
+}
+.faq-item.open .faq-q .icon { transform: rotate(45deg); }
+.faq-a {
+  font-size: 14px; color: var(--text-muted); line-height: 1.75;
+  padding-bottom: 20px; display: none;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ── CTA ── */
+.cta-section {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3a8f 100%);
+  padding: 80px 0; text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(59,91,219,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-section h2 { color: #fff; font-size: clamp(22px, 3vw, 32px); margin-bottom: 12px; position: relative; }
+.cta-section p { color: rgba(255,255,255,0.65); font-size: 15px; margin-bottom: 32px; position: relative; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+.btn-white {
+  background: #fff; color: var(--navy);
+  padding: 13px 28px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-ghost {
+  background: transparent; color: rgba(255,255,255,0.8);
+  padding: 13px 28px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 400; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: background 0.2s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.1); }
+.cta-contact { margin-top: 28px; font-size: 14px; color: rgba(255,255,255,0.5); position: relative; }
+.cta-contact strong { color: rgba(255,255,255,0.85); }
+
+/* ── FOOTER ── */
+footer {
+  background: #0a1a3d; padding: 48px 0 28px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  max-width: 1040px; margin: 0 auto; padding: 0 24px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+}
+.footer-logo {
+  font-family: 'Gothic A1', sans-serif;
+  font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 10px;
+}
+.footer-logo span { color: var(--gold); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+.footer-col h4 { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); margin-bottom: 14px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-col ul li a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 10px;
+}
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(10,26,61,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999; display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fff; border-radius: 16px;
+  padding: 36px; max-width: 480px; width: 100%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn { from { opacity:0; transform:scale(0.95) translateY(8px); } to { opacity:1; transform:none; } }
+.modal h3 { font-size: 20px; color: var(--navy); margin-bottom: 6px; }
+.modal .sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+.modal-form input, .modal-form select, .modal-form textarea {
+  width: 100%; padding: 11px 14px; margin-bottom: 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text);
+  outline: none; transition: border-color 0.2s;
+}
+.modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus { border-color: var(--indigo); }
+.modal-form textarea { height: 90px; resize: none; }
+.modal-submit {
+  width: 100%; padding: 13px;
+  background: var(--indigo); color: #fff; border: none;
+  border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s;
+}
+.modal-submit:hover { background: var(--blue); }
+.modal-close {
+  position: absolute; top: 16px; right: 20px;
+  font-size: 22px; color: var(--text-muted); cursor: pointer; line-height: 1;
+}
+
+/* ── ANIMATIONS ── */
+.fade-in { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade-in.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 16px 24px; gap: 14px;
+  }
+  .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+  .hero-card { display: none; }
+  .hero-stats { gap: 20px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .stats-inner > div + div { border-left: none; }
+  .stats-inner > div:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.1); }
+  .stats-inner > div:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); }
+  .calc-wrapper { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .process-steps::before { display: none; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" style="position:relative">
+    <span class="modal-close" onclick="closeModal()">×</span>
+    <h3>무료 초기 상담 신청</h3>
+    <p class="sub">기본 정보를 남겨주시면 1영업일 내로 연락드립니다.</p>
+    <form class="modal-form" action="https://formspree.io/f/mgopwqzl" method="POST" onsubmit="handleSubmit(event)">
+      <input type="text" name="성함" placeholder="성함" required />
+      <input type="tel" name="연락처" placeholder="연락처" required />
+      <input type="email" name="이메일" placeholder="이메일" required />
+      <select name="문의유형" required>
+        <option value="">문의 유형 선택</option>
+        <option>개인투자조합 설립</option>
+        <option>세무신고 및 결산</option>
+        <option>투자자(LP) 관리</option>
+        <option>조합 외부감사</option>
+        <option>기타 문의</option>
+      </select>
+      <textarea name="문의내용" placeholder="문의 내용을 간략히 적어주세요 (선택)"></textarea>
+      <button type="submit" class="modal-submit">상담 신청하기</button>
+    </form>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><svg width="22" height="22" viewBox="0 0 22 22" style="display:inline-block;vertical-align:middle;margin-right:6px;margin-bottom:2px;"><polygon points="11,3 19,8 19,16 11,21 3,16 3,8" fill="none" stroke="#3b5bdb" stroke-width="1.2"/><line x1="11" y1="3" x2="11" y2="21" stroke="#3b5bdb" stroke-width="0.8"/><line x1="3" y1="8" x2="19" y2="16" stroke="#3b5bdb" stroke-width="0.8"/><line x1="19" y1="8" x2="3" y2="16" stroke="#3b5bdb" stroke-width="0.8"/></svg>큐브<span>파트너스</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#services">서비스</a>
+      <a href="about.html">전문가 소개</a>
+      <a href="insight.html">인사이트</a>
+      <a href="board.html">문의</a>
+      <a href="process.html">업무 절차</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="openModal()">무료 상담 신청</div>
+    <div class="nav-toggle" onclick="toggleNav()" id="navToggle">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="fade-in">
+      <div class="hero-badge">개인투자조합 전문 세무·회계</div>
+      <h1>투자조합 설립부터<br>감사, 청산, LP 세무까지,<br><em>올인원 케어</em>로</h1>
+      <p class="hero-sub">
+        개인투자조합의 설립 신고, 투자자 사후관리, 회계감사, 청산까지 —<br>
+        복잡한 벤처투자의 라이프사이클을 실무 경험을 바탕으로<br>
+        명확하게 안내해 드립니다.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal()">무료 초기 상담 신청</button>
+        <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">서비스 살펴보기</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="num"><span class="counter" data-target="200">0</span><span>+</span></div>
+          <div class="label">설립 지원 조합 수</div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="counter" data-target="8">0</span><span>년</span></div>
+          <div class="label">개인투자조합 전문 경력</div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="counter" data-target="98">0</span><span>%</span></div>
+          <div class="label">고객 재의뢰율</div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in hero-card" style="transition-delay:0.15s">
+
+      <!-- 카드 상단 타이틀 -->
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.1em; color:var(--indigo); text-transform:uppercase; margin-bottom:14px;">전담 전문가 팀</div>
+
+      <!-- 설립 담당: 최의란 행정사 -->
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:14px; background:var(--bg2); border-radius:var(--radius-sm); margin-bottom:10px;">
+        <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,#4c6ef5,#2b4acb); display:flex; align-items:center; justify-content:center; font-family:'Noto Serif KR',serif; font-size:16px; color:#fff; font-weight:600; flex-shrink:0;">최</div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:3px;">
+            <div style="font-size:14px; font-weight:600; color:var(--navy);">최의란 행정사</div>
+            <span style="font-size:10px; font-weight:700; background:var(--indigo-light); color:var(--indigo); padding:2px 8px; border-radius:20px; white-space:nowrap;">조합 설립·벤처인증</span>
+          </div>
+          <div style="font-size:12px; color:var(--indigo); margin-bottom:6px;">올림 행정사합동사무소 대표</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px;">
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">벤처기업인증 전문</span>
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">서울시립대 도시행정학 박사</span>
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">대한행정사회 교수</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 감사·세무 담당: 박성수 회계사 -->
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:14px; background:var(--bg2); border-radius:var(--radius-sm); margin-bottom:14px;">
+        <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--indigo),var(--navy)); display:flex; align-items:center; justify-content:center; font-family:'Noto Serif KR',serif; font-size:16px; color:#fff; font-weight:600; flex-shrink:0;">박</div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:3px;">
+            <div style="font-size:14px; font-weight:600; color:var(--navy);">박성수 회계사</div>
+            <span style="font-size:10px; font-weight:700; background:#e8f5e9; color:#2e7d32; padding:2px 8px; border-radius:20px; white-space:nowrap;">감사·세무·청산</span>
+          </div>
+          <div style="font-size:12px; color:var(--indigo); margin-bottom:6px;">개인투자조합/벤처투자조합 전문</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px;">
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">前 스타트업 CFO</span>
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">공공기관 감사</span>
+            <span style="font-size:10px; color:var(--text-muted); background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:20px;">벤처투자 세제 전문</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 역할 흐름 표시 -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:0; font-size:10px; font-weight:500; margin-bottom:14px;">
+        <span style="background:var(--indigo-light); color:var(--indigo); padding:4px 10px; border-radius:20px 0 0 20px; border:1px solid var(--indigo-mid);">설립·인증</span>
+        <span style="background:var(--indigo-light); color:var(--indigo); padding:4px 8px; border:1px solid var(--indigo-mid); border-left:none;">→</span>
+        <span style="background:var(--indigo-light); color:var(--indigo); padding:4px 10px; border:1px solid var(--indigo-mid); border-left:none;">기장</span>
+        <span style="background:var(--indigo-light); color:var(--indigo); padding:4px 8px; border:1px solid var(--indigo-mid); border-left:none;">→</span>
+        <span style="background:#e8f5e9; color:#2e7d32; padding:4px 10px; border:1px solid #c8e6c9; border-left:none;">감사</span>
+        <span style="background:#e8f5e9; color:#2e7d32; padding:4px 8px; border:1px solid #c8e6c9; border-left:none;">→</span>
+        <span style="background:#e8f5e9; color:#2e7d32; padding:4px 10px; border:1px solid #c8e6c9; border-left:none;">세무·배분</span>
+        <span style="background:#e8f5e9; color:#2e7d32; padding:4px 8px; border:1px solid #c8e6c9; border-left:none;">→</span>
+        <span style="background:#e8f5e9; color:#2e7d32; padding:4px 10px; border-radius:0 20px 20px 0; border:1px solid #c8e6c9; border-left:none;">청산</span>
+      </div>
+
+      <!-- 전문가 소개 링크 -->
+      <div style="padding-top:12px; border-top:1px solid var(--border); text-align:center;">
+        <a href="about.html" style="font-size:13px; color:var(--indigo); font-weight:500;">전문가 소개 전체 보기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-title fade-in">
+      <div class="section-label">Services</div>
+      <h2>무엇을 도와드릴 수 있나요</h2>
+      <p>개인투자조합과 관련된 모든 세무·회계 업무를 처음부터 끝까지 담당합니다.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">📋</div>
+        <h3>조합 설립 및 등록</h3>
+        <p>중소벤처기업부 신고, 정관 작성, 출자 구조 설계까지 법적 요건에 맞게 원스톱으로 처리합니다.</p>
+        <ul class="service-list">
+          <li>중소벤처기업부 설립 신고</li>
+          <li>정관 및 조합 계약서 작성</li>
+          <li>출자 구조 및 투자 약정 설계</li>
+          <li>업무집행조합원(GP) 등록 지원</li>
+        </ul>
+      </div>
+      <div class="service-card fade-in" style="transition-delay:0.1s">
+        <div class="service-icon">📊</div>
+        <h3>세무신고 및 결산</h3>
+        <p>조합의 연간 세무신고와 결산을 정확하게 처리하고, 투자자별 소득 분배를 관리합니다.</p>
+        <ul class="service-list">
+          <li>조합 연간 세무신고 대행</li>
+          <li>이익 배분 계산 및 지급</li>
+          <li>LP별 소득세 신고 지원</li>
+          <li>투자 손익 정산 보고서</li>
+        </ul>
+      </div>
+      <div class="service-card fade-in" style="transition-delay:0.05s">
+        <div class="service-icon">👥</div>
+        <h3>투자자(LP) 관리</h3>
+        <p>조합원 변경, 지분 이전, 분배금 계산 등 LP 관련 모든 행정 업무를 체계적으로 관리합니다.</p>
+        <ul class="service-list">
+          <li>조합원 가입·탈퇴 처리</li>
+          <li>지분 이전 및 양도 처리</li>
+          <li>분배금 계산 및 원천징수</li>
+          <li>정기 투자자 보고서 작성</li>
+        </ul>
+      </div>
+      <div class="service-card fade-in" style="transition-delay:0.15s">
+        <div class="service-icon">💡</div>
+        <h3>세제 혜택 컨설팅</h3>
+        <p>벤처투자 소득공제, 양도소득 비과세 등 절세 기회를 놓치지 않도록 전략을 수립합니다.</p>
+        <ul class="service-list">
+          <li>벤처투자 소득공제 검토</li>
+          <li>양도소득 비과세 요건 분석</li>
+          <li>창업초기기업 특례 적용</li>
+          <li>세법 개정에 따른 절세 전략</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="fade-in">
+      <div class="stat-big"><span class="counter" data-target="200">0</span><span>+</span></div>
+      <div class="stat-desc">누적 설립 지원 조합</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.1s">
+      <div class="stat-big"><span class="counter" data-target="8">0</span><span>년</span></div>
+      <div class="stat-desc">개인투자조합 전문 경력</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.2s">
+      <div class="stat-big"><span class="counter" data-target="500">0</span><span>+</span></div>
+      <div class="stat-desc">LP 세무신고 처리 건</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.3s">
+      <div class="stat-big"><span class="counter" data-target="98">0</span><span style="color:var(--gold)">%</span></div>
+      <div class="stat-desc">고객 재의뢰율</div>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<section class="section calculator" id="calculator">
+  <div class="container">
+    <div class="section-title fade-in">
+      <div class="section-label">Tool</div>
+      <h2>소득공제 간편 계산기</h2>
+    </div>
+    <div class="calc-wrapper">
+      <div class="calc-info fade-in">
+        <p>
+          개인투자조합을 통해 벤처기업에 투자하면 출자금액의 일정 비율을
+          종합소득세에서 공제받을 수 있습니다. 투자 금액과 조합 유형을
+          입력해 예상 소득공제액을 빠르게 확인해 보세요.
+        </p>
+        <p style="font-size:14px; color:var(--text-muted);">
+          실제 공제액은 소득 규모, 투자 대상 기업, 보유 기간 등에 따라
+          달라질 수 있습니다. 정확한 절세 전략은 전문가 상담을 통해 확인하세요.
+        </p>
+        <div class="calc-disclaimer">
+          ※ 조특법 제16조 및 벤촉법 기준 산식 적용. 본 계산기는 참고용이며
+          법적 효력이 없습니다. 실제 세액은 다른 공제항목 등에 따라 다를 수 있습니다.
+        </div>
+        <button onclick="openLawModal()" style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; padding:11px 20px; background:var(--indigo-light); color:var(--indigo); border:1.5px solid var(--indigo-mid); border-radius:var(--radius-sm); font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:500; cursor:pointer; transition:background 0.2s;">
+          📄 소득공제 관련 세제 보기
+        </button>
+      </div>
+      <div class="calc-box fade-in" style="transition-delay:0.1s">
+        <h3>🧮 개인투자조합 소득공제 계산</h3>
+        <div class="form-group">
+          <label>출자 금액</label>
+          <input type="number" id="investAmount" placeholder="예: 50000000" min="0" oninput="resetCalc()" />
+        </div>
+        <div class="form-group">
+          <label>투자 대상 기업 유형</label>
+          <select id="investType" onchange="resetCalc()">
+            <option value="">선택하세요</option>
+            <option value="early">창업 3년 이내 중소기업</option>
+            <option value="growth">창업 3~7년 중소기업</option>
+            <option value="venture">벤처기업 (일반)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>종합소득금액 (연간, 세전)</label>
+          <input type="number" id="grossIncome" placeholder="예: 100000000" min="0" oninput="resetCalc()" />
+        </div>
+        <div class="form-group">
+          <label>종합소득 과세표준 (연간)</label>
+          <select id="taxBase" onchange="resetCalc()">
+            <option value="6">1,200만원 이하 (세율 6%)</option>
+            <option value="15">1,200~4,600만원 (세율 15%)</option>
+            <option value="24" selected>4,600~8,800만원 (세율 24%)</option>
+            <option value="35">8,800만원~1.5억 (세율 35%)</option>
+            <option value="38">1.5억~3억 (세율 38%)</option>
+            <option value="40">3억~5억 (세율 40%)</option>
+            <option value="42">5억 초과 (세율 42%)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calculate()">소득공제액 계산하기</button>
+        <div class="calc-result" id="calcResult" style="display:none;">
+          <div class="result-label">예상 소득공제 금액</div>
+          <div class="result-amount" id="deductionAmt">—</div>
+          <div id="calcDetail" style="font-size:12px; color:var(--text-muted); margin-top:6px; line-height:1.7;"></div>
+          <div id="taxSavingAmt" style="font-size:13px; color:var(--navy); font-weight:500; margin-top:8px; padding-top:8px; border-top:1px solid var(--indigo-mid);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAW MODAL -->
+<div class="modal-overlay" id="lawModal" onclick="if(event.target===this)closeLawModal()">
+  <div class="modal" style="position:relative; max-width:640px; max-height:85vh; overflow-y:auto;">
+    <span class="modal-close" onclick="closeLawModal()">×</span>
+    <h3 style="margin-bottom:4px;">소득공제 관련 세제</h3>
+    <p class="sub">조세특례제한법 · 벤처투자 촉진에 관한 법률</p>
+
+    <div style="background:var(--indigo-light); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:20px; font-size:13px; color:var(--blue); line-height:1.6;">
+      ✦ 개인투자조합을 통해 투자 시 <strong>조특법 제16조</strong>에 따라 출자금액을 종합소득금액에서 공제받을 수 있습니다.
+    </div>
+
+    <div style="margin-bottom:22px;">
+      <div style="font-size:12px; font-weight:700; letter-spacing:0.1em; color:var(--indigo); text-transform:uppercase; margin-bottom:10px;">조세특례제한법 제16조</div>
+      <div style="font-size:14px; font-weight:600; color:var(--navy); margin-bottom:10px;">벤처기업등에의 출자에 대한 소득공제</div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:12px;">
+        <strong style="color:var(--text);">① 공제 대상</strong><br>
+        거주자가 다음 어느 하나에 해당하는 방법으로 중소기업창업투자조합, 한국벤처투자조합,
+        <strong style="color:var(--navy);">개인투자조합</strong> 등을 통해 투자하는 경우 소득공제 적용
+      </div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:12px;">
+        <strong style="color:var(--text);">② 공제율 (투자금액 구간별 누진 적용)</strong><br>
+        <table style="width:100%; margin-top:8px; border-collapse:collapse; font-size:12px;">
+          <tr style="background:var(--indigo-light);">
+            <td style="padding:6px 10px; font-weight:600; color:var(--navy); border-radius:4px 0 0 4px;">투자금액 구간</td>
+            <td style="padding:6px 10px; font-weight:600; color:var(--navy);">공제율</td>
+            <td style="padding:6px 10px; font-weight:600; color:var(--navy); border-radius:0 4px 4px 0;">비고</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:7px 10px;">3,000만원 이하분</td>
+            <td style="padding:7px 10px; color:var(--indigo); font-weight:600;">100%</td>
+            <td style="padding:7px 10px;">최대 3,000만원 공제</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:7px 10px;">3,000만원 초과 ~ 5,000만원 이하분</td>
+            <td style="padding:7px 10px; color:var(--indigo); font-weight:600;">70%</td>
+            <td style="padding:7px 10px;">최대 1,400만원 추가</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;">5,000만원 초과분</td>
+            <td style="padding:7px 10px; color:var(--indigo); font-weight:600;">30%</td>
+            <td style="padding:7px 10px;">초과분의 30%</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:12px;">
+        <strong style="color:var(--text);">③ 공제 한도</strong><br>
+        해당 과세연도 <strong style="color:var(--navy);">종합소득금액의 50%</strong>를 한도로 공제
+        (한도 초과분은 공제 불가, 이월 없음)
+      </div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8;">
+        <strong style="color:var(--text);">④ 보유 요건</strong><br>
+        투자일로부터 <strong style="color:var(--navy);">3년 이상</strong> 보유 시 소득공제 유지
+        (3년 미만 회수 시 공제받은 세액 추징)
+      </div>
+    </div>
+
+    <div style="margin-bottom:22px;">
+      <div style="font-size:12px; font-weight:700; letter-spacing:0.1em; color:var(--indigo); text-transform:uppercase; margin-bottom:10px;">벤처투자 촉진에 관한 법률 (벤촉법)</div>
+      <div style="font-size:14px; font-weight:600; color:var(--navy); margin-bottom:10px;">개인투자조합 관련 주요 조항</div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:12px;">
+        <strong style="color:var(--text);">제13조 (개인투자조합의 결성)</strong><br>
+        2인 이상의 조합원으로 구성, 업무집행조합원(GP) 1인 이상 포함 필수.
+        중소벤처기업부에 등록 후 효력 발생.
+      </div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8; margin-bottom:12px;">
+        <strong style="color:var(--text);">제14조 (투자 의무 비율)</strong><br>
+        출자금 총액의 <strong style="color:var(--navy);">40% 이상</strong>을 벤처기업·창업기업에 투자해야 함.
+        나머지는 전문투자자 대상 증권 등에 운용 가능.
+      </div>
+
+      <div style="background:var(--bg2); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--text-muted); line-height:1.8;">
+        <strong style="color:var(--text);">제15조 (조합원 배분 및 청산)</strong><br>
+        존속 기간 만료 또는 조합원 총회 결의에 따라 청산.
+        청산 시 잔여재산은 출자 지분에 비례하여 배분.
+      </div>
+    </div>
+
+    <div style="background:#fff7ed; border-radius:var(--radius-sm); padding:12px 16px; font-size:12px; color:#854f0b; line-height:1.7;">
+      ⚠️ 위 내용은 2024년 기준이며, 세법 개정에 따라 변경될 수 있습니다. 실제 적용 시 반드시 전문가 확인을 권고합니다.
+    </div>
+    <button onclick="closeLawModal()" style="margin-top:16px; width:100%; padding:11px; background:var(--indigo); color:#fff; border:none; border-radius:var(--radius-sm); font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:500; cursor:pointer;">닫기</button>
+  </div>
+</div>
+
+<!-- BLOG -->
+<section class="section" id="blog" style="background:var(--bg)">
+  <div class="container">
+    <div class="section-title fade-in" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px">
+      <div>
+        <div class="section-label">Insight</div>
+        <h2 style="margin-bottom:0">실무 인사이트</h2>
+      </div>
+      <a href="insight.html" style="font-size:14px; color:var(--indigo); font-weight:500">전체 보기 →</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card fade-in" onclick="location.href='insight.html'" style="cursor:pointer;">
+        <div class="blog-thumb-img" style="background:#eef2ff">⚖️</div>
+        <div class="blog-body">
+          <div class="blog-tag">세법 개정</div>
+          <h3>2025년 벤처투자 소득공제 한도 변경, 조합에 미치는 영향</h3>
+          <p>개정된 조세특례제한법에 따른 변화와 기존 조합원이 대응해야 할 사항을 정리했습니다.</p>
+          <div class="blog-meta">
+            <span>2025. 11. 20</span>
+            <span class="read-more">읽기 →</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card fade-in" style="transition-delay:0.1s; cursor:pointer;" onclick="location.href='insight.html'">
+        <div class="blog-thumb-img" style="background:#f0fdf4">📝</div>
+        <div class="blog-body">
+          <div class="blog-tag">실무 가이드</div>
+          <h3>개인투자조합 설립 신고 시 가장 많이 틀리는 3가지</h3>
+          <p>현장에서 자주 발생하는 실수와 그 해결 방법을 구체적인 사례와 함께 설명합니다.</p>
+          <div class="blog-meta">
+            <span>2025. 10. 08</span>
+            <span class="read-more">읽기 →</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card fade-in" style="transition-delay:0.2s; cursor:pointer;" onclick="location.href='insight.html'">
+        <div class="blog-thumb-img" style="background:#fff7ed">💼</div>
+        <div class="blog-body">
+          <div class="blog-tag">Q&A</div>
+          <h3>LP가 외국인일 때 세무신고는 어떻게 달라지나요?</h3>
+          <p>외국인 투자자가 포함된 개인투자조합의 원천징수 및 조세조약 적용 방법을 알아봅니다.</p>
+          <div class="blog-meta">
+            <span>2025. 09. 14</span>
+            <span class="read-more">읽기 →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process" id="process" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-title fade-in">
+      <div class="section-label">Process</div>
+      <h2>업무 진행 절차</h2>
+      <p>처음 상담부터 완료까지, 4단계로 명확하게 진행합니다.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step fade-in">
+        <div class="step-num">01</div>
+        <h3>무료 초기 상담</h3>
+        <p>현황과 니즈를 파악하고 최적의 조합 구조와 세무 방향을 제안드립니다.</p>
+      </div>
+      <div class="process-step fade-in" style="transition-delay:0.1s">
+        <div class="step-num">02</div>
+        <h3>계약 및 서류 준비</h3>
+        <p>필요 서류 목록을 안내해 드리고, 정관·약정서 초안을 함께 작성합니다.</p>
+      </div>
+      <div class="process-step fade-in" style="transition-delay:0.2s">
+        <div class="step-num">03</div>
+        <h3>설립 신고 및 등록</h3>
+        <p>중소벤처기업부 신고부터 등록 완료까지 모든 행정 절차를 대행합니다.</p>
+      </div>
+      <div class="process-step fade-in" style="transition-delay:0.3s">
+        <div class="step-num">04</div>
+        <h3>지속 관리 서비스</h3>
+        <p>연간 세무신고, LP 관리, 법령 변경 대응을 지속적으로 지원합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq" id="faq">
+  <div class="container">
+    <div class="section-title fade-in">
+      <div class="section-label">FAQ</div>
+      <h2>자주 묻는 질문</h2>
+    </div>
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          개인투자조합 설립에 얼마나 걸리나요?
+          <div class="icon">+</div>
+        </div>
+        <div class="faq-a">
+          서류가 완비된 기준으로 통상 2~3주 내에 설립 신고가 완료됩니다. 
+          정관 작성부터 시작하면 약 4~6주 정도 여유를 두시는 것이 좋습니다. 
+          중소벤처기업부 신고 처리 시간에 따라 다소 차이가 있을 수 있습니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          조합원은 최소 몇 명이어야 하나요?
+          <div class="icon">+</div>
+        </div>
+        <div class="faq-a">
+          개인투자조합은 업무집행조합원(GP) 1인 포함 최소 2인 이상의 조합원으로 구성해야 합니다. 
+          조합원 수에 상한은 없지만, 49인 이하로 구성하는 경우 일부 규제 적용 여부가 달라질 수 있어 
+          구조 설계 단계에서 함께 검토합니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          출자금 최소 금액이 있나요?
+          <div class="icon">+</div>
+        </div>
+        <div class="faq-a">
+          법정 최소 출자금액은 별도로 정해져 있지 않습니다. 다만 소득공제 혜택을 받으려면 
+          출자금이 실제 투자로 연결되어야 하며, 현실적인 운영을 위해 통상 1억원 이상으로 
+          구성하는 경우가 많습니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          이미 설립된 조합의 세무 업무만 맡길 수 있나요?
+          <div class="icon">+</div>
+        </div>
+        <div class="faq-a">
+          네, 물론입니다. 기존에 다른 곳에서 설립한 조합의 세무신고, LP 관리, 결산 업무만 
+          개별적으로 의뢰하실 수 있습니다. 이전 자료를 검토한 후 원활하게 이관 처리해 드립니다.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          수수료는 어떻게 책정되나요?
+          <div class="icon">+</div>
+        </div>
+        <div class="faq-a">
+          조합 규모, 조합원 수, 서비스 범위에 따라 맞춤형으로 책정됩니다. 
+          초기 상담에서 현황을 파악한 후 명확한 견적을 제시해 드립니다. 
+          숨겨진 추가 비용 없이 투명하게 운영합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>개인투자조합, 처음이라 막막하신가요?</h2>
+    <p>복잡한 절차와 세금 문제, 혼자 고민하지 않아도 됩니다. 첫 상담은 무료입니다.</p>
+    <div class="cta-btns">
+      <button class="btn-white" onclick="openModal()">무료 초기 상담 신청</button>
+      <button class="btn-ghost" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">소득공제 먼저 계산해보기</button>
+    </div>
+    <div class="cta-contact">
+      📞 <strong>02-0000-0000</strong> &nbsp;|&nbsp; ✉️ <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="64070b0a10050710240e0b0c050610051c4a0f16">[email&#160;protected]</a></strong>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">큐브<span>파트너스</span></div>
+        <p class="footer-desc">
+          개인투자조합 설립부터 세무신고, LP 관리까지<br>
+          벤처투자 세제를 가장 잘 아는 전문가와 함께하세요.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>서비스</h4>
+        <ul>
+          <li><a href="#services">조합 설립 및 등록</a></li>
+          <li><a href="#services">세무신고 및 결산</a></li>
+          <li><a href="#services">투자자(LP) 관리</a></li>
+          <li><a href="#services">세제 혜택 컨설팅</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>리소스</h4>
+        <ul>
+          <li><a href="insight.html">실무 인사이트</a></li>
+          <li><a href="#calculator">소득공제 계산기</a></li>
+          <li><a href="#faq">자주 묻는 질문</a></li>
+          <li><a href="#" onclick="openModal()">무료 상담 신청</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 큐브파트너스. All rights reserved.</p>
+      <p>사업자등록번호: 000-00-00000 | 대표: 박성수</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── MODAL ── */
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  fetch('https://formspree.io/f/mgopwqzl', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if (res.ok) {
+      alert('상담 신청이 완료되었습니다!\n1영업일 내로 연락드리겠습니다. 감사합니다.');
+      form.reset();
+      closeModal();
+    } else {
+      alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    }
+  }).catch(() => {
+    alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+  });
+}
+
+/* ── MOBILE NAV ── */
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+/* ── CALCULATOR ── */
+function resetCalc() {
+  var r = document.getElementById('calcResult');
+  if (r) r.style.display = 'none';
+}
+
+function calculate() {
+  var amount = parseFloat(document.getElementById('investAmount').value) || 0;
+  var type = document.getElementById('investType').value;
+  var grossIncome = parseFloat(document.getElementById('grossIncome').value) || 0;
+  var taxRate = parseFloat(document.getElementById('taxBase').value) || 0;
+
+  if (!amount || !type) {
+    alert('출자 금액과 투자 대상 기업 유형을 모두 입력해 주세요.');
+    return;
+  }
+
+  /* 조특법 제16조 구간별 누진 공제율 산식 */
+  var rawDeduction = 0;
+  var detail = '';
+
+  if (amount <= 30000000) {
+    rawDeduction = amount * 1.0;
+    detail = '3,000만원 이하 구간: ' + fmt(amount) + ' × 100% = ' + fmt(rawDeduction);
+  } else if (amount <= 50000000) {
+    var t1 = 30000000;
+    var t2 = (amount - 30000000) * 0.7;
+    rawDeduction = t1 + t2;
+    detail = '3,000만원 이하 구간: ' + fmt(30000000) + ' × 100% = ' + fmt(t1) + '\n'
+           + '3,000~5,000만원 구간: ' + fmt(amount - 30000000) + ' × 70% = ' + fmt(Math.round(t2));
+  } else {
+    var t1 = 30000000;
+    var t2 = 20000000 * 0.7;
+    var t3 = (amount - 50000000) * 0.3;
+    rawDeduction = t1 + t2 + t3;
+    detail = '3,000만원 이하 구간: ' + fmt(30000000) + ' × 100% = ' + fmt(t1) + '\n'
+           + '3,000~5,000만원 구간: ' + fmt(20000000) + ' × 70% = ' + fmt(Math.round(t2)) + '\n'
+           + '5,000만원 초과 구간: ' + fmt(amount - 50000000) + ' × 30% = ' + fmt(Math.round(t3));
+  }
+
+  /* 종합소득금액 50% 한도 적용 */
+  var cap = grossIncome > 0 ? grossIncome * 0.5 : Infinity;
+  var deduction = Math.min(rawDeduction, cap);
+  var capped = deduction < rawDeduction;
+
+  /* 예상 절세액 */
+  var taxSaving = deduction * (taxRate / 100);
+
+  /* 결과 표시 */
+  var r = document.getElementById('calcResult');
+  r.style.display = 'block';
+  document.getElementById('deductionAmt').textContent = fmt(Math.round(deduction));
+
+  var detailEl = document.getElementById('calcDetail');
+  var detailLines = detail.split('\n').map(function(l){ return '· ' + l; }).join('<br>');
+  detailEl.innerHTML = '<div style="margin-bottom:6px;">' + detailLines + '</div>'
+    + (capped ? '<div style="color:#a32d2d; font-size:11px;">⚠️ 종합소득금액(' + fmt(grossIncome) + ')의 50% 한도 적용으로 ' + fmt(Math.round(rawDeduction)) + ' → ' + fmt(Math.round(deduction)) + '으로 감액</div>' : '');
+
+  document.getElementById('taxSavingAmt').textContent =
+    '예상 절세액: 약 ' + fmt(Math.round(taxSaving)) + ' (세율 ' + taxRate + '% 적용)';
+}
+
+function fmt(n) { return Math.round(n).toLocaleString('ko-KR') + '원'; }
+
+/* ── LAW MODAL ── */
+function openLawModal() {
+  document.getElementById('lawModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLawModal() {
+  document.getElementById('lawModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+/* ── FAQ ── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── COUNTER ANIMATION ── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1400;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current);
+    if (current >= target) clearInterval(timer);
+  }, 16);
+}
+
+/* ── SCROLL ANIMATIONS ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      entry.target.querySelectorAll('.counter').forEach(animateCounter);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* initial trigger for above-fold elements */
+setTimeout(() => {
+  document.querySelectorAll('.fade-in').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('visible');
+      el.querySelectorAll('.counter').forEach(animateCounter);
+    }
+  });
+}, 100);
+</script>
+</body>
+</html>

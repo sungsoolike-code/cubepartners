@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인사이트 | 큐브파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@900&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2557; --blue: #1a3a8f; --indigo: #3b5bdb;
+  --indigo-light: #eef2ff; --indigo-mid: #c5d0fa; --gold: #d4a847;
+  --text: #1a1a2e; --text-muted: #5c6070; --text-light: #9199ab;
+  --bg: #ffffff; --bg2: #f8f9fc; --bg3: #f1f3fa;
+  --border: rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(15,37,87,0.07);
+  --shadow-md: 0 6px 32px rgba(15,37,87,0.12);
+  --green: #2e7d32; --red: #c62828;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; font-size: 16px; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+h1,h2,h3 { font-family: 'Noto Serif KR', serif; font-weight: 600; line-height: 1.35; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; }
+.nav-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 32px; }
+.logo { font-family: 'Gothic A1', sans-serif; font-size: 19px; font-weight: 900; color: var(--navy); white-space: nowrap; display: flex; align-items: center; }
+.logo span { color: var(--indigo); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--indigo); font-weight: 500; }
+.nav-cta { background: var(--indigo); color: #fff; padding: 9px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.page-hero { background: linear-gradient(145deg, #e8eeff 0%, #f4f6ff 60%, #fafbff 100%); padding: 52px 0 44px; border-bottom: 1px solid var(--indigo-mid); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--indigo); text-transform: uppercase; margin-bottom: 10px; }
+.page-hero h1 { font-size: clamp(24px, 3.5vw, 34px); color: var(--navy); margin-bottom: 10px; }
+.page-hero p { font-size: 15px; color: var(--text-muted); max-width: 500px; line-height: 1.75; }
+.category-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 24px; position: sticky; top: 64px; z-index: 90; }
+.category-inner { max-width: 1040px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.category-inner::-webkit-scrollbar { display: none; }
+.cat-tab { font-size: 14px; color: var(--text-muted); padding: 14px 20px; white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.cat-tab:hover { color: var(--text); }
+.cat-tab.active { color: var(--indigo); font-weight: 500; border-bottom-color: var(--indigo); }
+.content-area { padding: 48px 0 80px; }
+.content-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
+.featured-post { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg); margin-bottom: 32px; transition: box-shadow 0.25s, transform 0.2s; cursor: pointer; }
+.featured-post:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.featured-thumb { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 56px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
+.featured-body { padding: 28px; }
+.post-meta-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.cat-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.07em; }
+.cat-badge.tax { background: var(--indigo-light); color: var(--indigo); }
+.cat-badge.setup { background: #e8f5e9; color: #2e7d32; }
+.cat-badge.audit { background: #fff3e0; color: #e65100; }
+.cat-badge.news { background: #fce4ec; color: #c62828; }
+.cat-badge.qa { background: #f3e5f5; color: #6a1b9a; }
+.featured-body h2 { font-size: 20px; color: var(--navy); margin-bottom: 10px; line-height: 1.4; }
+.featured-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+.post-meta-bottom { font-size: 12px; color: var(--text-light); display: flex; justify-content: space-between; align-items: center; }
+.read-more { font-size: 13px; color: var(--indigo); font-weight: 500; }
+.post-list { display: flex; flex-direction: column; gap: 16px; }
+.post-item { display: flex; gap: 20px; align-items: flex-start; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); cursor: pointer; transition: box-shadow 0.25s, transform 0.2s; }
+.post-item:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.post-thumb-sm { width: 64px; height: 64px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+.post-content { flex: 1; min-width: 0; }
+.post-content h3 { font-size: 15px; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
+.post-content p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.post-meta { font-size: 12px; color: var(--text-light); display: flex; gap: 12px; align-items: center; }
+.pagination { display: flex; gap: 8px; justify-content: center; margin-top: 40px; }
+.page-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+.page-btn:hover { background: var(--bg3); }
+.page-btn.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 120px; }
+.sidebar-widget { padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); }
+.widget-title { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.search-box { display: flex; gap: 0; }
+.search-box input { flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-right: none; border-radius: var(--radius-sm) 0 0 var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; outline: none; }
+.search-box input:focus { border-color: var(--indigo); }
+.search-box button { padding: 10px 14px; background: var(--indigo); color: #fff; border: none; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; cursor: pointer; font-size: 14px; }
+.cat-list { list-style: none; }
+.cat-list li { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.cat-list li:last-child { border-bottom: none; }
+.cat-list li:hover .cat-name { color: var(--indigo); }
+.cat-name { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.cat-count { font-size: 12px; color: var(--text-light); background: var(--bg3); padding: 2px 8px; border-radius: 20px; }
+.pop-list { list-style: none; }
+.pop-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.pop-item:last-child { border-bottom: none; }
+.pop-num { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 600; color: var(--indigo-mid); flex-shrink: 0; width: 20px; line-height: 1.2; }
+.pop-title { font-size: 13px; color: var(--text-muted); line-height: 1.5; transition: color 0.2s; }
+.pop-item:hover .pop-title { color: var(--navy); }
+.newsletter-box { background: var(--navy); border-radius: var(--radius); padding: 20px; }
+.newsletter-box h4 { font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+.newsletter-box p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 14px; }
+.newsletter-box input { width: 100%; padding: 9px 12px; border: none; border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; margin-bottom: 8px; outline: none; }
+.newsletter-box button { width: 100%; padding: 9px; background: var(--indigo); color: #fff; border: none; border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; }
+footer { background: #0a1a3d; padding: 40px 0 24px; }
+.footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; margin-bottom: 28px; flex-wrap: wrap; }
+.footer-logo { font-family: 'Gothic A1', sans-serif; font-size: 18px; font-weight: 900; color: #fff; }
+.footer-logo span { color: var(--gold); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 6px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* ADMIN UI */
+.admin-bar { background: var(--navy); color: #fff; padding: 8px 24px; font-size: 13px; display: none; }
+.admin-bar .container { display: flex; align-items: center; justify-content: space-between; }
+.admin-bar button { background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 5px 14px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; margin-left: 8px; }
+.write-btn { display: none; background: var(--indigo); color: #fff; border: none; padding: 10px 20px; border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 24px; }
+.write-btn:hover { background: var(--blue); }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal-box { background: #fff; border-radius: var(--radius); padding: 32px; max-width: 400px; width: 90%; box-shadow: var(--shadow-md); }
+.modal-box.wide { max-width: 640px; max-height: 90vh; overflow-y: auto; }
+.modal-box h3 { margin-bottom: 20px; font-size: 18px; color: var(--navy); font-family: 'Noto Serif KR', serif; }
+.modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-light); }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
+.form-row input, .form-row textarea, .form-row select { width: 100%; padding: 10px 14px; border: 1px solid #dde1ea; border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text); outline: none; }
+.form-row input:focus, .form-row textarea:focus { border-color: var(--indigo); }
+.form-row textarea { resize: vertical; min-height: 160px; }
+.form-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.btn-primary { background: var(--indigo); color: #fff; border: none; padding: 12px 28px; border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; }
+.btn-primary:hover { background: var(--blue); }
+.error-msg { color: var(--red); font-size: 13px; margin-top: 8px; display: none; }
+
+@media (max-width: 768px) {
+  .content-inner { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .nav-links { display: none; }
+  .form-row-half { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="admin-bar" id="adminBar">
+  <div class="container">
+    <span>🔒 관리자 모드 · <span id="adminName"></span></span>
+    <span>
+      <button onclick="openWriteModal()">✏️ 새 글 작성</button>
+      <button onclick="adminLogout()">로그아웃</button>
+    </span>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cubepartners.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" style="margin-right:6px;flex-shrink:0;"><polygon points="11,3 19,8 19,16 11,21 3,16 3,8" fill="none" stroke="#3b5bdb" stroke-width="1.2"/><line x1="11" y1="3" x2="11" y2="21" stroke="#3b5bdb" stroke-width="0.8"/><line x1="3" y1="8" x2="19" y2="16" stroke="#3b5bdb" stroke-width="0.8"/><line x1="19" y1="8" x2="3" y2="16" stroke="#3b5bdb" stroke-width="0.8"/></svg>큐브<span>파트너스</span>
+    </a>
+    <div class="nav-links">
+      <a href="cubepartners.html#services">서비스</a>
+      <a href="about.html">전문가 소개</a>
+      <a href="insight.html" class="active">인사이트</a>
+      <a href="board.html">문의</a>
+      <a href="cubepartners.html#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="location.href='cubepartners.html'">무료 상담 신청</div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Insight</div>
+    <h1>실무 인사이트</h1>
+    <p>개인투자조합·벤처투자조합의 설립, 세무, 감사, 청산까지 — 실무에서 바로 쓸 수 있는 정보를 전달합니다.</p>
+    <div id="adminLoginLink" style="margin-top:12px;">
+      <a href="javascript:void(0)" onclick="openLoginModal()" style="font-size:12px; color:var(--text-light);">관리자</a>
+    </div>
+  </div>
+</section>
+
+<div class="category-bar">
+  <div class="category-inner">
+    <div class="cat-tab active" onclick="filterCat('all', this)">전체</div>
+    <div class="cat-tab" onclick="filterCat('tax', this)">세무·절세</div>
+    <div class="cat-tab" onclick="filterCat('setup', this)">설립·인증</div>
+    <div class="cat-tab" onclick="filterCat('audit', this)">감사·결산</div>
+    <div class="cat-tab" onclick="filterCat('news', this)">법령 개정</div>
+    <div class="cat-tab" onclick="filterCat('qa', this)">Q&A</div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <div>
+      <button class="write-btn" id="writeBtn" onclick="openWriteModal()">✏️ 새 글 작성</button>
+      <div id="firebaseArticles"></div>
+
+      <div class="featured-post" data-cat="tax">
+        <div class="featured-thumb">⚖️</div>
+        <div class="featured-body">
+          <div class="post-meta-top">
+            <span class="cat-badge tax">세무·절세</span>
+            <span style="font-size:12px; color:var(--text-light);">대표 글</span>
+          </div>
+          <h2>2025년 벤처투자 소득공제 한도 변경, 개인투자조합원이 꼭 알아야 할 것들</h2>
+          <p>조세특례제한법 제16조 개정으로 소득공제 한도와 적용 요건이 변경되었습니다. 기존 조합원과 신규 투자자 모두에게 영향을 미치는 이번 변화의 핵심을 정리했습니다.</p>
+          <div class="post-meta-bottom">
+            <span>2025. 11. 20 · 박성수 회계사</span>
+            <span class="read-more">읽기 →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-list" id="postList">
+        <div class="post-item" data-cat="setup"><div class="post-thumb-sm" style="background:#e8f5e9;">📋</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge setup">설립·인증</span></div><h3>개인투자조합 설립 신고 시 가장 많이 틀리는 3가지</h3><p>현장에서 자주 발생하는 실수 — 정관 기재 사항 누락, GP 요건 미충족, 투자 약정서 형식 오류를 구체적 사례로 설명합니다.</p><div class="post-meta"><span>2025. 10. 08</span><span>최의란 행정사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+        <div class="post-item" data-cat="qa"><div class="post-thumb-sm" style="background:#f3e5f5;">💼</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge qa">Q&A</span></div><h3>LP가 외국인일 때 세무신고는 어떻게 달라지나요?</h3><p>외국인 투자자가 포함된 개인투자조합의 원천징수 및 조세조약 적용 방법, 환급 절차까지 단계별로 안내합니다.</p><div class="post-meta"><span>2025. 09. 14</span><span>박성수 회계사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+        <div class="post-item" data-cat="audit"><div class="post-thumb-sm" style="background:#fff3e0;">🔍</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge audit">감사·결산</span></div><h3>개인투자조합 외부감사 의무 대상 기준과 준비 서류</h3><p>모든 조합이 외부감사 대상은 아닙니다. 자산 규모·조합원 수 기준과 감사 준비 시 필요한 서류 목록을 정리했습니다.</p><div class="post-meta"><span>2025. 08. 22</span><span>박성수 회계사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+        <div class="post-item" data-cat="news"><div class="post-thumb-sm" style="background:#fce4ec;">📰</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge news">법령 개정</span></div><h3>2024년 벤촉법 개정 주요 내용 — 개인투자조합에 미치는 영향</h3><p>벤처투자 촉진에 관한 법률 개정으로 투자 의무 비율, 보고 의무 등이 변경됩니다. 기존 조합의 대응 방안을 안내합니다.</p><div class="post-meta"><span>2025. 07. 10</span><span>박성수 회계사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+        <div class="post-item" data-cat="setup"><div class="post-thumb-sm" style="background:#e8f5e9;">🏢</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge setup">설립·인증</span></div><h3>벤처기업 혁신성장유형 vs 벤처투자유형, 어떤 것이 유리할까?</h3><p>두 유형의 인증 요건, 유효기간, 세제 혜택 차이를 비교하고 투자 단계별로 어떤 선택이 유리한지 분석합니다.</p><div class="post-meta"><span>2025. 06. 18</span><span>최의란 행정사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+        <div class="post-item" data-cat="tax"><div class="post-thumb-sm" style="background:#eef2ff;">💰</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge tax">세무·절세</span></div><h3>조합 청산 시 양도소득세 비과세 요건 — 놓치기 쉬운 함정들</h3><p>3년 보유 요건, 벤처기업 요건 충족 시점, 환수 조항까지 — 비과세가 취소되는 경우를 사전에 방지하는 방법.</p><div class="post-meta"><span>2025. 05. 30</span><span>박성수 회계사</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div></div></div>
+      </div>
+
+      <div class="pagination">
+        <div class="page-btn active">1</div><div class="page-btn">2</div><div class="page-btn">3</div><div class="page-btn">›</div>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="sidebar-widget"><div class="widget-title">검색</div><div class="search-box"><input type="text" placeholder="키워드 검색..." /><button>🔍</button></div></div>
+      <div class="sidebar-widget"><div class="widget-title">카테고리</div><ul class="cat-list"><li onclick="filterCat('all', null)"><span class="cat-name">전체 글</span><span class="cat-count">12</span></li><li onclick="filterCat('tax', null)"><span class="cat-name">세무·절세</span><span class="cat-count">4</span></li><li onclick="filterCat('setup', null)"><span class="cat-name">설립·인증</span><span class="cat-count">3</span></li><li onclick="filterCat('audit', null)"><span class="cat-name">감사·결산</span><span class="cat-count">2</span></li><li onclick="filterCat('news', null)"><span class="cat-name">법령 개정</span><span class="cat-count">2</span></li><li onclick="filterCat('qa', null)"><span class="cat-name">Q&A</span><span class="cat-count">1</span></li></ul></div>
+      <div class="sidebar-widget"><div class="widget-title">인기 글</div><ul class="pop-list"><li class="pop-item"><span class="pop-num">01</span><span class="pop-title">2025년 벤처투자 소득공제 한도 변경</span></li><li class="pop-item"><span class="pop-num">02</span><span class="pop-title">개인투자조합 설립 신고 시 많이 틀리는 3가지</span></li><li class="pop-item"><span class="pop-num">03</span><span class="pop-title">조합 청산 시 양도소득세 비과세 요건</span></li><li class="pop-item"><span class="pop-num">04</span><span class="pop-title">외부감사 의무 대상 기준과 준비 서류</span></li><li class="pop-item"><span class="pop-num">05</span><span class="pop-title">LP가 외국인일 때 세무신고</span></li></ul></div>
+      <div class="sidebar-widget"><div class="newsletter-box"><h4>📬 세법 개정 알림 받기</h4><p>개인투자조합 관련 세법 개정 소식을 이메일로 바로 받아보세요.</p><input type="email" placeholder="이메일 주소" /><button>구독하기</button></div></div>
+      <div class="sidebar-widget"><div style="background:var(--indigo-light); border-radius:var(--radius); padding:18px;"><div style="font-size:13px; font-weight:500; color:var(--navy); margin-bottom:6px;">📞 전문가 상담</div><div style="font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">글을 읽다가 궁금한 점이 생기셨나요? 무료 초기 상담을 신청하세요.</div><button onclick="location.href='cubepartners.html'" style="width:100%; padding:9px; background:var(--indigo); color:#fff; border:none; border-radius:var(--radius-sm); font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:500; cursor:pointer;">무료 상담 신청</button></div></div>
+    </aside>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoginModal()">×</button>
+    <h3>🔐 관리자 로그인</h3>
+    <div class="form-row"><label>이메일</label><input type="email" id="loginEmail" placeholder="관리자 이메일"></div>
+    <div class="form-row"><label>비밀번호</label><input type="password" id="loginPassword" placeholder="비밀번호" onkeydown="if(event.key==='Enter') adminLogin()"></div>
+    <div class="error-msg" id="loginError"></div>
+    <div style="text-align:right; margin-top:16px;"><button class="btn-primary" onclick="adminLogin()">로그인</button></div>
+  </div>
+</div>
+
+<!-- WRITE MODAL -->
+<div class="modal-overlay" id="writeModal">
+  <div class="modal-box wide">
+    <button class="modal-close" onclick="closeWriteModal()">×</button>
+    <h3 id="writeModalTitle">✏️ 새 글 작성</h3>
+    <input type="hidden" id="editDocId" value="">
+    <div class="form-row-half">
+      <div class="form-row"><label>카테고리 *</label><select id="articleCat"><option value="tax">세무·절세</option><option value="setup">설립·인증</option><option value="audit">감사·결산</option><option value="news">법령 개정</option><option value="qa">Q&A</option></select></div>
+      <div class="form-row"><label>작성자 *</label><input type="text" id="articleAuthor" placeholder="예: 박성수 회계사" value="박성수 회계사"></div>
+    </div>
+    <div class="form-row-half">
+      <div class="form-row"><label>아이콘</label><input type="text" id="articleEmoji" placeholder="예: ⚖️ 💰 📋" value="📝" maxlength="4"></div>
+      <div class="form-row"><label>날짜</label><input type="date" id="articleDate"></div>
+    </div>
+    <div class="form-row"><label>제목 *</label><input type="text" id="articleTitle" placeholder="글 제목"></div>
+    <div class="form-row"><label>요약 *</label><textarea id="articleSummary" placeholder="목록에 표시될 2~3줄 요약" style="min-height:80px;"></textarea></div>
+    <div class="form-row"><label>본문</label><textarea id="articleBody" placeholder="전체 내용 (상세 페이지용)" style="min-height:200px;"></textarea></div>
+    <div style="text-align:right; margin-top:12px;"><button class="btn-primary" id="publishBtn" onclick="publishArticle()">발행하기</button></div>
+  </div>
+</div>
+
+<!-- ARTICLE DETAIL MODAL -->
+<div class="modal-overlay" id="articleDetailModal">
+  <div class="modal-box wide">
+    <button class="modal-close" onclick="document.getElementById('articleDetailModal').classList.remove('show')">×</button>
+    <div id="articleDetailContent"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-logo">큐브<span>파트너스</span></div><div class="footer-desc">개인투자조합 전문 세무·회계·행정 서비스</div></div>
+      <div class="footer-links"><a href="cubepartners.html">홈</a><a href="about.html">전문가 소개</a><a href="insight.html">인사이트</a><a href="board.html">문의</a><a href="cubepartners.html#faq">FAQ</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 큐브파트너스. All rights reserved.</p><p>대표: 박성수 | 010-3693-4303</p></div>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyC7TM-70pnIavXhoqzkYaE_UQIROcBMitw",
+  authDomain: "cubepartners-f508f.firebaseapp.com",
+  projectId: "cubepartners-f508f",
+  storageBucket: "cubepartners-f508f.firebasestorage.app",
+  messagingSenderId: "280512269415",
+  appId: "1:280512269415:web:14d96b02be77707e4458c2"
+});
+var db = firebase.firestore(), auth = firebase.auth(), isAdmin = false;
+var catCfg = { tax:{n:'세무·절세',bg:'#eef2ff',em:'💰'}, setup:{n:'설립·인증',bg:'#e8f5e9',em:'📋'}, audit:{n:'감사·결산',bg:'#fff3e0',em:'🔍'}, news:{n:'법령 개정',bg:'#fce4ec',em:'📰'}, qa:{n:'Q&A',bg:'#f3e5f5',em:'💼'} };
+
+function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
+
+async function loadFirebaseArticles(){
+  try{
+    var snap=await db.collection('articles').orderBy('createdAt','desc').get();
+    var c=document.getElementById('firebaseArticles');
+    if(snap.empty){c.innerHTML='';updateCounts();return;}
+    var h='<div class="post-list" style="margin-bottom:24px;">';
+    snap.forEach(function(doc){
+      var d=doc.data(), cat=catCfg[d.category]||catCfg.tax;
+      var dt=d.date||(d.createdAt?d.createdAt.toDate().toLocaleDateString('ko-KR'):'');
+      var adm=isAdmin?'<div style="margin-top:8px;display:flex;gap:4px;"><button onclick="event.stopPropagation();editArticle(\''+doc.id+'\')" style="font-size:11px;padding:3px 10px;border-radius:4px;border:1px solid #dde1ea;background:#fff;cursor:pointer;font-family:Noto Sans KR,sans-serif;">수정</button><button onclick="event.stopPropagation();deleteArticle(\''+doc.id+'\',\''+esc(d.title).replace(/'/g,"\\'")+'\')" style="font-size:11px;padding:3px 10px;border-radius:4px;border:1px solid #f5c6cb;background:#fff;cursor:pointer;font-family:Noto Sans KR,sans-serif;color:#c62828;">삭제</button></div>':'';
+      h+='<div class="post-item firebase-article" data-cat="'+d.category+'" onclick="location.href=\'article.html?id='+doc.id+'\'"><div class="post-thumb-sm" style="background:'+cat.bg+';">'+(d.emoji||cat.em)+'</div><div class="post-content"><div class="post-meta-top" style="margin-bottom:6px;"><span class="cat-badge '+d.category+'">'+cat.n+'</span><span style="font-size:10px;color:var(--indigo);font-weight:600;">NEW</span></div><h3>'+esc(d.title)+'</h3><p>'+esc(d.summary)+'</p><div class="post-meta"><span>'+dt+'</span><span>'+esc(d.author)+'</span><span class="read-more" style="margin-left:auto;">읽기 →</span></div>'+adm+'</div></div>';
+    });
+    h+='</div>';
+    c.innerHTML=h;
+    updateCounts();
+  }catch(e){console.error(e);}
+}
+
+function showDetail(id){
+  location.href='article.html?id='+id;
+}
+
+function openLoginModal(){document.getElementById('loginModal').classList.add('show');}
+function closeLoginModal(){document.getElementById('loginModal').classList.remove('show');}
+async function adminLogin(){
+  var e=document.getElementById('loginEmail').value.trim(),p=document.getElementById('loginPassword').value,err=document.getElementById('loginError');
+  err.style.display='none';
+  try{await auth.signInWithEmailAndPassword(e,p);closeLoginModal();}
+  catch(ex){err.textContent='이메일 또는 비밀번호가 올바르지 않습니다.';err.style.display='block';}
+}
+function adminLogout(){auth.signOut();}
+auth.onAuthStateChanged(function(u){
+  if(u){isAdmin=true;document.getElementById('adminBar').style.display='block';document.getElementById('adminName').textContent=u.email;document.getElementById('writeBtn').style.display='block';document.getElementById('adminLoginLink').style.display='none';loadFirebaseArticles();}
+  else{isAdmin=false;document.getElementById('adminBar').style.display='none';document.getElementById('writeBtn').style.display='none';document.getElementById('adminLoginLink').style.display='block';loadFirebaseArticles();}
+});
+
+function openWriteModal(){
+  document.getElementById('editDocId').value='';
+  document.getElementById('writeModalTitle').textContent='✏️ 새 글 작성';
+  document.getElementById('articleCat').value='tax';
+  document.getElementById('articleAuthor').value='박성수 회계사';
+  document.getElementById('articleEmoji').value='📝';
+  document.getElementById('articleDate').value=new Date().toISOString().split('T')[0];
+  document.getElementById('articleTitle').value='';
+  document.getElementById('articleSummary').value='';
+  document.getElementById('articleBody').value='';
+  document.getElementById('publishBtn').textContent='발행하기';
+  document.getElementById('writeModal').classList.add('show');
+}
+async function editArticle(id){
+  try{var doc=await db.collection('articles').doc(id).get();if(!doc.exists)return;var d=doc.data();
+  document.getElementById('editDocId').value=id;
+  document.getElementById('writeModalTitle').textContent='📝 글 수정';
+  document.getElementById('articleCat').value=d.category;
+  document.getElementById('articleAuthor').value=d.author||'';
+  document.getElementById('articleEmoji').value=d.emoji||'';
+  document.getElementById('articleDate').value=d.dateRaw||'';
+  document.getElementById('articleTitle').value=d.title||'';
+  document.getElementById('articleSummary').value=d.summary||'';
+  document.getElementById('articleBody').value=d.body||'';
+  document.getElementById('publishBtn').textContent='수정 완료';
+  document.getElementById('writeModal').classList.add('show');
+  }catch(e){console.error(e);}
+}
+function closeWriteModal(){document.getElementById('writeModal').classList.remove('show');}
+
+async function publishArticle(){
+  var title=document.getElementById('articleTitle').value.trim();
+  var summary=document.getElementById('articleSummary').value.trim();
+  if(!title||!summary){alert('제목과 요약은 필수입니다.');return;}
+  var dateVal=document.getElementById('articleDate').value;
+  var dateStr=dateVal?dateVal.replace(/-/g,'. ')+'.':new Date().toLocaleDateString('ko-KR');
+  var data={category:document.getElementById('articleCat').value,author:document.getElementById('articleAuthor').value.trim()||'박성수 회계사',emoji:document.getElementById('articleEmoji').value.trim()||'📝',date:dateStr,dateRaw:dateVal,title:title,summary:summary,body:document.getElementById('articleBody').value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  var docId=document.getElementById('editDocId').value;
+  try{
+    if(docId){await db.collection('articles').doc(docId).update(data);}
+    else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();await db.collection('articles').add(data);}
+    closeWriteModal();loadFirebaseArticles();
+  }catch(e){console.error(e);alert('저장 실패');}
+}
+
+async function deleteArticle(id,title){
+  if(!confirm('"'+title+'" 글을 삭제하시겠습니까?'))return;
+  try{await db.collection('articles').doc(id).delete();loadFirebaseArticles();}catch(e){alert('삭제 실패');}
+}
+
+function filterCat(cat,el){
+  document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.post-item').forEach(function(item){item.style.display=(cat==='all'||item.dataset.cat===cat)?'flex':'none';});
+  var f=document.querySelector('.featured-post');
+  if(f)f.style.display=(cat==='all'||f.dataset.cat===cat)?'block':'none';
+}
+
+function updateCounts(){
+  var all=document.querySelectorAll('.post-item, .featured-post');
+  var counts={all:all.length,tax:0,setup:0,audit:0,news:0,qa:0};
+  all.forEach(function(item){var c=item.dataset.cat;if(counts[c]!==undefined)counts[c]++;});
+  var els=document.querySelectorAll('.cat-count');
+  var cats=['all','tax','setup','audit','news','qa'];
+  els.forEach(function(el,i){if(cats[i])el.textContent=counts[cats[i]]||0;});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  updateCounts();
+  loadFirebaseArticles();
+  var d=document.getElementById('articleDate');
+  if(d)d.value=new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>

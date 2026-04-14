@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의 게시판 | 큐브파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@900&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2557; --blue: #1a3a8f; --indigo: #3b5bdb;
+  --indigo-light: #eef2ff; --indigo-mid: #c5d0fa; --gold: #d4a847;
+  --text: #1a1a2e; --text-muted: #5c6070; --text-light: #9199ab;
+  --bg: #ffffff; --bg2: #f8f9fc; --bg3: #f1f3fa;
+  --border: rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(15,37,87,0.07);
+  --shadow-md: 0 6px 32px rgba(15,37,87,0.12);
+  --green: #2e7d32; --red: #c62828;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; font-size: 16px; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+h1,h2,h3 { font-family: 'Noto Serif KR', serif; font-weight: 600; line-height: 1.35; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; }
+.nav-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 32px; }
+.logo { font-family: 'Gothic A1', sans-serif; font-size: 19px; font-weight: 900; color: var(--navy); white-space: nowrap; display: flex; align-items: center; }
+.logo span { color: var(--indigo); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--indigo); font-weight: 500; }
+.nav-cta { background: var(--indigo); color: #fff; padding: 9px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+
+/* PAGE HERO */
+.page-hero { background: linear-gradient(145deg, #e8eeff 0%, #f4f6ff 60%, #fafbff 100%); padding: 52px 0 44px; border-bottom: 1px solid var(--indigo-mid); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--indigo); text-transform: uppercase; margin-bottom: 10px; }
+.page-hero h1 { font-size: clamp(24px, 3.5vw, 34px); color: var(--navy); margin-bottom: 10px; }
+.page-hero p { font-size: 15px; color: var(--text-muted); max-width: 500px; line-height: 1.75; }
+
+/* TAB SWITCHER */
+.tab-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 24px; position: sticky; top: 64px; z-index: 90; }
+.tab-inner { max-width: 1040px; margin: 0 auto; display: flex; gap: 0; }
+.tab-btn { font-size: 14px; color: var(--text-muted); padding: 14px 24px; white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; font-family: 'Noto Sans KR', sans-serif; background: none; border-top: none; border-left: none; border-right: none; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--indigo); font-weight: 500; border-bottom-color: var(--indigo); }
+
+/* CONTENT */
+.board-content { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* FORM */
+.form-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 32px; }
+.form-card h3 { font-size: 18px; margin-bottom: 20px; color: var(--navy); }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%; padding: 10px 14px; border: 1px solid #dde1ea; border-radius: var(--radius-sm);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text);
+  outline: none; transition: border-color 0.2s;
+}
+.form-row input:focus, .form-row textarea:focus { border-color: var(--indigo); }
+.form-row textarea { resize: vertical; min-height: 120px; }
+.form-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-hint { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+.btn-primary {
+  background: var(--indigo); color: #fff; border: none; padding: 12px 28px;
+  border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--blue); }
+.btn-primary:disabled { background: #a5b4fc; cursor: not-allowed; }
+.btn-secondary {
+  background: var(--bg2); color: var(--text); border: 1px solid #dde1ea; padding: 12px 28px;
+  border-radius: var(--radius-sm); font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s;
+}
+.btn-secondary:hover { background: var(--bg3); }
+
+/* SUCCESS MESSAGE */
+.success-msg { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px; display: none; }
+.success-msg h4 { color: var(--green); font-size: 15px; margin-bottom: 6px; font-family: 'Noto Sans KR', sans-serif; }
+.success-msg p { font-size: 13px; color: #2e7d32; }
+
+/* INQUIRY LIST (for check & admin) */
+.inquiry-item {
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px;
+  margin-bottom: 12px; transition: box-shadow 0.2s; cursor: pointer;
+}
+.inquiry-item:hover { box-shadow: var(--shadow); }
+.inquiry-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.inquiry-title { font-weight: 500; font-size: 15px; color: var(--navy); }
+.inquiry-meta { font-size: 12px; color: var(--text-light); }
+.inquiry-preview { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.inquiry-status { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.status-waiting { background: #fff3e0; color: #e65100; }
+.status-replied { background: #e8f5e9; color: #2e7d32; }
+
+/* DETAIL VIEW */
+.inquiry-detail { display: none; background: var(--bg2); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.inquiry-detail .detail-body { font-size: 14px; line-height: 1.8; color: var(--text); white-space: pre-wrap; margin-bottom: 20px; }
+.reply-box { background: var(--indigo-light); border-radius: var(--radius-sm); padding: 16px; margin-top: 16px; }
+.reply-box h4 { font-size: 13px; color: var(--indigo); margin-bottom: 8px; }
+.reply-box p { font-size: 14px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+/* ADMIN LOGIN MODAL */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal-box { background: #fff; border-radius: var(--radius); padding: 32px; max-width: 400px; width: 90%; box-shadow: var(--shadow-md); }
+.modal-box h3 { margin-bottom: 20px; font-size: 18px; color: var(--navy); }
+.modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-light); }
+.error-msg { color: var(--red); font-size: 13px; margin-top: 8px; display: none; }
+
+/* ADMIN BAR */
+.admin-bar { background: var(--navy); color: #fff; padding: 8px 24px; font-size: 13px; display: none; }
+.admin-bar .container { display: flex; align-items: center; justify-content: space-between; }
+.admin-bar .admin-name { font-weight: 500; }
+.admin-bar button { background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 5px 14px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+/* FOOTER */
+footer { background: #0a1a3a; color: #ccd3e0; padding: 48px 0 32px; margin-top: 0; }
+.footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; gap: 24px; }
+.footer-logo { font-family: 'Gothic A1', sans-serif; font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+.footer-logo span { color: var(--gold); }
+.footer-desc { font-size: 13px; color: #8899b5; }
+.footer-links { display: flex; gap: 24px; font-size: 13px; }
+.footer-links a { color: #8899b5; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; font-size: 12px; color: #5c6e8a; flex-wrap: wrap; gap: 8px; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .form-row-half { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* LOADING */
+.loading { text-align: center; padding: 40px; }
+.spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--indigo); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ADMIN BAR (shown when admin is logged in) -->
+<div class="admin-bar" id="adminBar">
+  <div class="container">
+    <span>🔒 관리자 모드 · <span class="admin-name" id="adminName"></span></span>
+    <button onclick="adminLogout()">로그아웃</button>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cubepartners.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" style="margin-right:6px;flex-shrink:0;">
+        <polygon points="11,3 19,8 19,16 11,21 3,16 3,8" fill="none" stroke="#3b5bdb" stroke-width="1.2"/>
+        <line x1="11" y1="3" x2="11" y2="21" stroke="#3b5bdb" stroke-width="0.8"/>
+        <line x1="3" y1="8" x2="19" y2="16" stroke="#3b5bdb" stroke-width="0.8"/>
+        <line x1="19" y1="8" x2="3" y2="16" stroke="#3b5bdb" stroke-width="0.8"/>
+      </svg>큐브<span>파트너스</span>
+    </a>
+    <div class="nav-links">
+      <a href="cubepartners.html#services">서비스</a>
+      <a href="about.html">전문가 소개</a>
+      <a href="insight.html">인사이트</a>
+      <a href="board.html" class="active">문의</a>
+      <a href="cubepartners.html#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="location.href='cubepartners.html'">무료 상담 신청</div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h1>문의 게시판</h1>
+    <p>개인투자조합 관련 궁금한 점을 남겨주시면 전문가가 직접 답변 드립니다. 회원가입 없이 바로 작성하실 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- TAB SWITCHER -->
+<div class="tab-bar">
+  <div class="tab-inner">
+    <button class="tab-btn active" onclick="switchTab('write', this)">✏️ 문의 작성</button>
+    <button class="tab-btn" onclick="switchTab('check', this)">🔍 내 문의 확인</button>
+    <button class="tab-btn" id="adminTabBtn" onclick="openAdminLogin()" style="margin-left:auto; font-size:12px; color:var(--text-light);">🔐 관리자</button>
+  </div>
+</div>
+
+<div class="board-content">
+
+  <!-- ==================== TAB 1: WRITE ==================== -->
+  <div id="tabWrite">
+    <div class="success-msg" id="successMsg">
+      <h4>✅ 문의가 성공적으로 등록되었습니다</h4>
+      <p>"내 문의 확인" 탭에서 닉네임과 비밀번호로 답변을 확인하실 수 있습니다.</p>
+    </div>
+
+    <div class="form-card">
+      <h3>문의 작성</h3>
+      <div class="form-row-half">
+        <div class="form-row">
+          <label>닉네임 *</label>
+          <input type="text" id="inqNickname" placeholder="표시될 이름" maxlength="20">
+        </div>
+        <div class="form-row">
+          <label>비밀번호 *</label>
+          <input type="password" id="inqPassword" placeholder="문의 확인용 비밀번호">
+          <div class="form-hint">내 문의를 확인할 때 필요합니다</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>문의 유형</label>
+        <select id="inqType">
+          <option value="general">일반 문의</option>
+          <option value="tax">세무·절세 관련</option>
+          <option value="setup">조합 설립·인증</option>
+          <option value="audit">감사·결산</option>
+          <option value="etc">기타</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>제목 *</label>
+        <input type="text" id="inqTitle" placeholder="문의 제목을 입력하세요" maxlength="100">
+      </div>
+      <div class="form-row">
+        <label>내용 *</label>
+        <textarea id="inqContent" placeholder="궁금하신 내용을 자세히 적어주시면 더 정확한 답변을 드릴 수 있습니다."></textarea>
+      </div>
+      <div class="form-row">
+        <label>연락처 (선택)</label>
+        <input type="text" id="inqContact" placeholder="이메일 또는 전화번호 (빠른 회신을 원하시면)">
+      </div>
+      <div style="text-align:right; margin-top:8px;">
+        <button class="btn-primary" id="submitBtn" onclick="submitInquiry()">문의 등록</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 2: CHECK MY INQUIRY ==================== -->
+  <div id="tabCheck" style="display:none;">
+    <div class="form-card">
+      <h3>내 문의 확인</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">문의 작성 시 입력한 닉네임과 비밀번호를 입력하세요.</p>
+      <div class="form-row-half">
+        <div class="form-row">
+          <label>닉네임</label>
+          <input type="text" id="checkNickname" placeholder="닉네임">
+        </div>
+        <div class="form-row">
+          <label>비밀번호</label>
+          <input type="password" id="checkPassword" placeholder="비밀번호">
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <button class="btn-primary" onclick="checkMyInquiries()">조회</button>
+      </div>
+    </div>
+    <div id="myInquiryList"></div>
+  </div>
+
+  <!-- ==================== TAB 3: ADMIN ==================== -->
+  <div id="tabAdmin" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <h3 style="font-family:'Noto Serif KR',serif; font-size:18px; color:var(--navy);">전체 문의 목록</h3>
+      <select id="adminFilter" onchange="loadAdminInquiries()" style="padding:6px 12px; border:1px solid #dde1ea; border-radius:var(--radius-sm); font-size:13px; font-family:'Noto Sans KR',sans-serif;">
+        <option value="all">전체</option>
+        <option value="waiting">대기 중</option>
+        <option value="replied">답변 완료</option>
+      </select>
+    </div>
+    <div id="adminInquiryList">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoginModal()">×</button>
+    <h3>🔐 관리자 로그인</h3>
+    <div class="form-row">
+      <label>이메일</label>
+      <input type="email" id="adminEmail" placeholder="관리자 이메일">
+    </div>
+    <div class="form-row">
+      <label>비밀번호</label>
+      <input type="password" id="adminPassword" placeholder="비밀번호">
+    </div>
+    <div class="error-msg" id="loginError"></div>
+    <div style="text-align:right; margin-top:16px;">
+      <button class="btn-primary" onclick="adminLogin()">로그인</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN REPLY MODAL -->
+<div class="modal-overlay" id="replyModal">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="modal-close" onclick="closeReplyModal()">×</button>
+    <h3>💬 답변 작성</h3>
+    <div id="replyTarget" style="font-size:13px; color:var(--text-muted); margin-bottom:16px; padding:12px; background:var(--bg2); border-radius:var(--radius-sm);"></div>
+    <div class="form-row">
+      <label>답변 내용</label>
+      <textarea id="replyContent" placeholder="답변을 입력하세요..." style="min-height:150px;"></textarea>
+    </div>
+    <div style="text-align:right; margin-top:12px;">
+      <button class="btn-primary" onclick="submitReply()">답변 등록</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">큐브<span>파트너스</span></div>
+        <div class="footer-desc">개인투자조합 전문 세무·회계·행정 서비스</div>
+      </div>
+      <div class="footer-links">
+        <a href="cubepartners.html">홈</a>
+        <a href="about.html">전문가 소개</a>
+        <a href="insight.html">인사이트</a>
+        <a href="board.html">문의</a>
+        <a href="cubepartners.html#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 큐브파트너스. All rights reserved.</p>
+      <p>대표: 박성수 | 010-3693-4303</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ── Firebase Init ──
+const firebaseConfig = {
+  apiKey: "AIzaSyC7TM-70pnIavXhoqzkYaE_UQIROcBMitw",
+  authDomain: "cubepartners-f508f.firebaseapp.com",
+  projectId: "cubepartners-f508f",
+  storageBucket: "cubepartners-f508f.firebasestorage.app",
+  messagingSenderId: "280512269415",
+  appId: "1:280512269415:web:14d96b02be77707e4458c2"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// ── Utility: SHA-256 hash ──
+async function hashPassword(pw) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(pw + '_cubepartners_salt');
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ── Tab Switching ──
+let currentTab = 'write';
+function switchTab(tab, el) {
+  if (tab === 'admin' && !auth.currentUser) { openAdminLogin(); return; }
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('tabWrite').style.display = tab === 'write' ? 'block' : 'none';
+  document.getElementById('tabCheck').style.display = tab === 'check' ? 'block' : 'none';
+  document.getElementById('tabAdmin').style.display = tab === 'admin' ? 'block' : 'none';
+  if (tab === 'admin') loadAdminInquiries();
+}
+
+// ── Submit Inquiry ──
+async function submitInquiry() {
+  const nickname = document.getElementById('inqNickname').value.trim();
+  const password = document.getElementById('inqPassword').value;
+  const type = document.getElementById('inqType').value;
+  const title = document.getElementById('inqTitle').value.trim();
+  const content = document.getElementById('inqContent').value.trim();
+  const contact = document.getElementById('inqContact').value.trim();
+
+  if (!nickname || !password || !title || !content) {
+    alert('닉네임, 비밀번호, 제목, 내용은 필수입니다.');
+    return;
+  }
+  if (password.length < 4) {
+    alert('비밀번호는 4자 이상으로 설정해 주세요.');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '등록 중...';
+
+  try {
+    const pwHash = await hashPassword(password);
+    await db.collection('inquiries').add({
+      nickname: nickname,
+      passwordHash: pwHash,
+      type: type,
+      title: title,
+      content: content,
+      contact: contact,
+      status: 'waiting',
+      reply: '',
+      repliedAt: null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // Clear form
+    document.getElementById('inqNickname').value = '';
+    document.getElementById('inqPassword').value = '';
+    document.getElementById('inqTitle').value = '';
+    document.getElementById('inqContent').value = '';
+    document.getElementById('inqContact').value = '';
+    document.getElementById('inqType').selectedIndex = 0;
+
+    // Show success
+    document.getElementById('successMsg').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { document.getElementById('successMsg').style.display = 'none'; }, 8000);
+  } catch (err) {
+    console.error(err);
+    alert('등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '문의 등록';
+}
+
+// ── Check My Inquiries ──
+async function checkMyInquiries() {
+  const nickname = document.getElementById('checkNickname').value.trim();
+  const password = document.getElementById('checkPassword').value;
+  if (!nickname || !password) { alert('닉네임과 비밀번호를 입력해 주세요.'); return; }
+
+  const listEl = document.getElementById('myInquiryList');
+  listEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  try {
+    const pwHash = await hashPassword(password);
+    const snap = await db.collection('inquiries')
+      .where('nickname', '==', nickname)
+      .where('passwordHash', '==', pwHash)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    if (snap.empty) {
+      listEl.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>일치하는 문의가 없습니다.<br>닉네임과 비밀번호를 확인해 주세요.</p></div>';
+      return;
+    }
+
+    let html = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const date = d.createdAt ? d.createdAt.toDate().toLocaleDateString('ko-KR') : '';
+      const statusClass = d.status === 'replied' ? 'status-replied' : 'status-waiting';
+      const statusText = d.status === 'replied' ? '답변 완료' : '대기 중';
+      html += `
+        <div class="inquiry-item" onclick="toggleDetail('my_${doc.id}')">
+          <div class="inquiry-header">
+            <span class="inquiry-title">${escHtml(d.title)}</span>
+            <span class="inquiry-status ${statusClass}">${statusText}</span>
+          </div>
+          <div class="inquiry-meta">${date} · ${getTypeName(d.type)}</div>
+        </div>
+        <div class="inquiry-detail" id="my_${doc.id}">
+          <div class="detail-body">${escHtml(d.content)}</div>
+          ${d.reply ? `<div class="reply-box"><h4>📝 큐브파트너스 답변</h4><p>${escHtml(d.reply)}</p></div>` : '<p style="font-size:13px; color:var(--text-light);">아직 답변이 등록되지 않았습니다.</p>'}
+        </div>`;
+    });
+    listEl.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    listEl.innerHTML = '<div class="empty-state"><p>조회에 실패했습니다. 잠시 후 다시 시도해 주세요.</p></div>';
+  }
+}
+
+// ── Admin Functions ──
+function openAdminLogin() {
+  if (auth.currentUser) {
+    switchTab('admin', document.getElementById('adminTabBtn'));
+    return;
+  }
+  document.getElementById('loginModal').classList.add('show');
+}
+function closeLoginModal() { document.getElementById('loginModal').classList.remove('show'); }
+
+async function adminLogin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const pw = document.getElementById('adminPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  try {
+    await auth.signInWithEmailAndPassword(email, pw);
+    closeLoginModal();
+    showAdminUI(email);
+    switchTab('admin', document.getElementById('adminTabBtn'));
+  } catch (err) {
+    errEl.textContent = '이메일 또는 비밀번호가 올바르지 않습니다.';
+    errEl.style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  auth.signOut();
+  document.getElementById('adminBar').style.display = 'none';
+  document.getElementById('adminTabBtn').textContent = '🔐 관리자';
+  switchTab('write', document.querySelector('.tab-btn'));
+}
+
+function showAdminUI(email) {
+  document.getElementById('adminBar').style.display = 'block';
+  document.getElementById('adminName').textContent = email;
+  document.getElementById('adminTabBtn').textContent = '🔐 관리자 (로그인됨)';
+  document.getElementById('adminTabBtn').classList.add('active');
+}
+
+async function loadAdminInquiries() {
+  if (!auth.currentUser) return;
+  const listEl = document.getElementById('adminInquiryList');
+  listEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  try {
+    const filter = document.getElementById('adminFilter').value;
+    let query = db.collection('inquiries').orderBy('createdAt', 'desc');
+    if (filter === 'waiting') query = query.where('status', '==', 'waiting');
+    if (filter === 'replied') query = query.where('status', '==', 'replied');
+
+    const snap = await query.get();
+    if (snap.empty) {
+      listEl.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>문의가 없습니다.</p></div>';
+      return;
+    }
+
+    let html = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const date = d.createdAt ? d.createdAt.toDate().toLocaleDateString('ko-KR') : '';
+      const statusClass = d.status === 'replied' ? 'status-replied' : 'status-waiting';
+      const statusText = d.status === 'replied' ? '답변 완료' : '대기 중';
+      html += `
+        <div class="inquiry-item" onclick="toggleDetail('adm_${doc.id}')">
+          <div class="inquiry-header">
+            <span class="inquiry-title">${escHtml(d.title)}</span>
+            <div>
+              <span class="inquiry-status ${statusClass}">${statusText}</span>
+            </div>
+          </div>
+          <div class="inquiry-preview">${escHtml(d.nickname)} · ${date} · ${getTypeName(d.type)}${d.contact ? ' · ' + escHtml(d.contact) : ''}</div>
+        </div>
+        <div class="inquiry-detail" id="adm_${doc.id}">
+          <div class="detail-body">${escHtml(d.content)}</div>
+          ${d.reply ? `<div class="reply-box"><h4>📝 등록된 답변</h4><p>${escHtml(d.reply)}</p></div>` : ''}
+          <div style="margin-top:16px; text-align:right;">
+            <button class="btn-primary" onclick="event.stopPropagation(); openReplyModal('${doc.id}', '${escAttr(d.title)}', '${escAttr(d.nickname)}')">${d.reply ? '답변 수정' : '답변 작성'}</button>
+          </div>
+        </div>`;
+    });
+    listEl.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    listEl.innerHTML = '<div class="empty-state"><p>목록을 불러오지 못했습니다.</p></div>';
+  }
+}
+
+// ── Reply ──
+let currentReplyId = '';
+function openReplyModal(docId, title, nickname) {
+  currentReplyId = docId;
+  document.getElementById('replyTarget').innerHTML = `<strong>${nickname}</strong>님의 문의: ${title}`;
+  document.getElementById('replyContent').value = '';
+  document.getElementById('replyModal').classList.add('show');
+}
+function closeReplyModal() { document.getElementById('replyModal').classList.remove('show'); }
+
+async function submitReply() {
+  const reply = document.getElementById('replyContent').value.trim();
+  if (!reply) { alert('답변 내용을 입력해 주세요.'); return; }
+
+  try {
+    await db.collection('inquiries').doc(currentReplyId).update({
+      reply: reply,
+      status: 'replied',
+      repliedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeReplyModal();
+    loadAdminInquiries();
+  } catch (err) {
+    console.error(err);
+    alert('답변 등록에 실패했습니다.');
+  }
+}
+
+// ── Helpers ──
+function toggleDetail(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+function getTypeName(type) {
+  const map = { general: '일반 문의', tax: '세무·절세', setup: '설립·인증', audit: '감사·결산', etc: '기타' };
+  return map[type] || type;
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escAttr(str) {
+  if (!str) return '';
+  return str.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, ' ');
+}
+
+// ── Auth state listener ──
+auth.onAuthStateChanged(user => {
+  if (user) {
+    showAdminUI(user.email);
+  }
+});
+</script>
+</body>
+</html>

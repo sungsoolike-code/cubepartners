@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무 절차 | 큐브파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@900&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2557; --blue: #1a3a8f; --indigo: #3b5bdb;
+  --indigo-light: #eef2ff; --indigo-mid: #c5d0fa; --gold: #d4a847;
+  --green: #2e7d32; --green-light: #e8f5e9;
+  --text: #1a1a2e; --text-muted: #5c6070; --text-light: #9199ab;
+  --bg: #ffffff; --bg2: #f8f9fc; --bg3: #f1f3fa;
+  --border: rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(15,37,87,0.07);
+  --shadow-md: 0 6px 32px rgba(15,37,87,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; font-size: 16px; color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+h1,h2,h3 { font-family: 'Noto Serif KR', serif; font-weight: 600; line-height: 1.35; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; }
+.nav-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 32px; }
+.logo { font-family: 'Gothic A1', sans-serif; font-size: 19px; font-weight: 900; color: var(--navy); white-space: nowrap; display: flex; align-items: center; }
+.logo span { color: var(--indigo); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--indigo); font-weight: 500; }
+.nav-cta { background: var(--indigo); color: #fff; padding: 9px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+
+/* PAGE HERO */
+.page-hero { background: linear-gradient(145deg, #e8eeff 0%, #f4f6ff 60%, #fafbff 100%); padding: 52px 0 44px; border-bottom: 1px solid var(--indigo-mid); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--indigo); text-transform: uppercase; margin-bottom: 10px; }
+.page-hero h1 { font-size: clamp(24px, 3.5vw, 34px); color: var(--navy); margin-bottom: 10px; }
+.page-hero p { font-size: 15px; color: var(--text-muted); max-width: 560px; line-height: 1.75; }
+
+/* FLOW BAR */
+.flow-section { padding: 56px 0 20px; }
+.flow-bar { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 8px; }
+.flow-bar::-webkit-scrollbar { display: none; }
+.flow-step {
+  flex: 1; min-width: 140px; text-align: center; padding: 16px 12px;
+  border-radius: var(--radius-sm); color: #fff; font-size: 13px; font-weight: 500;
+  position: relative; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.flow-step:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.flow-step .step-num { font-size: 11px; opacity: 0.8; margin-bottom: 2px; }
+.flow-step .step-name { font-size: 14px; font-weight: 700; }
+.flow-step .step-who { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+.step-1 { background: var(--indigo); }
+.step-2 { background: #5c6bc0; }
+.step-3 { background: var(--green); }
+.step-4 { background: #00897b; }
+.step-5 { background: #1565c0; }
+.step-6 { background: var(--navy); }
+
+/* STEP CARDS */
+.steps-section { padding: 40px 0 72px; }
+.step-card {
+  display: grid; grid-template-columns: 80px 1fr; gap: 24px;
+  padding: 32px; margin-bottom: 20px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg); transition: box-shadow 0.25s;
+}
+.step-card:hover { box-shadow: var(--shadow-md); }
+.step-icon {
+  width: 80px; height: 80px; border-radius: var(--radius);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #fff; font-size: 28px;
+}
+.step-icon .icon-num { font-size: 11px; font-weight: 700; margin-top: 4px; }
+.step-body h3 { font-size: 18px; color: var(--navy); margin-bottom: 4px; }
+.step-body .step-meta {
+  font-size: 13px; color: var(--text-muted); margin-bottom: 12px;
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.step-body .step-meta strong { color: var(--text); }
+.step-body .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px; }
+.task-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.task-list li {
+  font-size: 12px; padding: 4px 12px;
+  background: var(--bg3); border-radius: 20px; color: var(--text-muted);
+}
+
+/* FAQ */
+.faq-section { background: var(--bg2); padding: 72px 0; }
+.faq-section h2 { font-size: clamp(20px, 3vw, 26px); color: var(--navy); margin-bottom: 32px; text-align: center; }
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius); background: #fff; margin-bottom: 10px; overflow: hidden; }
+.faq-q {
+  padding: 18px 24px; font-size: 15px; font-weight: 500; color: var(--navy);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  transition: background 0.2s;
+}
+.faq-q:hover { background: var(--bg3); }
+.faq-q .arrow { font-size: 18px; color: var(--text-light); transition: transform 0.3s; }
+.faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.faq-a-inner { padding: 0 24px 18px; font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+/* CTA */
+.cta-section { background: var(--navy); padding: 56px 24px; text-align: center; }
+.cta-section h2 { color: #fff; font-size: clamp(20px, 3vw, 26px); margin-bottom: 10px; }
+.cta-section p { color: rgba(255,255,255,0.6); font-size: 15px; margin-bottom: 24px; }
+.cta-btn {
+  display: inline-block; background: var(--indigo); color: #fff;
+  padding: 14px 36px; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 500; transition: background 0.2s;
+}
+.cta-btn:hover { background: #2a4bc7; }
+.cta-phone { color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 16px; }
+
+/* FOOTER */
+footer { background: #0a1a3d; padding: 40px 0 24px; }
+.footer-inner { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; margin-bottom: 28px; flex-wrap: wrap; }
+.footer-logo { font-family: 'Gothic A1', sans-serif; font-size: 18px; font-weight: 900; color: #fff; }
+.footer-logo span { color: var(--gold); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 6px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .step-card { grid-template-columns: 1fr; }
+  .step-icon { width: 60px; height: 60px; font-size: 22px; }
+  .flow-step { min-width: 120px; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cubepartners.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" style="margin-right:6px;flex-shrink:0;"><polygon points="11,3 19,8 19,16 11,21 3,16 3,8" fill="none" stroke="#3b5bdb" stroke-width="1.2"/><line x1="11" y1="3" x2="11" y2="21" stroke="#3b5bdb" stroke-width="0.8"/><line x1="3" y1="8" x2="19" y2="16" stroke="#3b5bdb" stroke-width="0.8"/><line x1="19" y1="8" x2="3" y2="16" stroke="#3b5bdb" stroke-width="0.8"/></svg>큐브<span>파트너스</span>
+    </a>
+    <div class="nav-links">
+      <a href="cubepartners.html#services">서비스</a>
+      <a href="about.html">전문가 소개</a>
+      <a href="insight.html">인사이트</a>
+      <a href="board.html">문의</a>
+      <a href="process.html" class="active">업무 절차</a>
+      <a href="cubepartners.html#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" onclick="location.href='cubepartners.html'">무료 상담 신청</div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label">Process</div>
+    <h1>업무 진행 절차</h1>
+    <p>개인투자조합의 설립부터 청산까지, 전 주기를 한 팀이 일관되게 관리합니다. 각 단계별 담당 전문가와 소요 기간을 확인하세요.</p>
+  </div>
+</section>
+
+<!-- FLOW BAR -->
+<div class="flow-section">
+  <div class="container">
+    <div class="flow-bar">
+      <div class="flow-step step-1"><div class="step-num">STEP 1</div><div class="step-name">설립 신고</div><div class="step-who">최의란 행정사</div></div>
+      <div class="flow-step step-2"><div class="step-num">STEP 2</div><div class="step-name">벤처인증</div><div class="step-who">최의란 행정사</div></div>
+      <div class="flow-step step-3"><div class="step-num">STEP 3</div><div class="step-name">기장·결산</div><div class="step-who">박성수 회계사</div></div>
+      <div class="flow-step step-4"><div class="step-num">STEP 4</div><div class="step-name">외부감사</div><div class="step-who">박성수 회계사</div></div>
+      <div class="flow-step step-5"><div class="step-num">STEP 5</div><div class="step-name">세무신고</div><div class="step-who">박성수 회계사</div></div>
+      <div class="flow-step step-6"><div class="step-num">STEP 6</div><div class="step-name">배분·청산</div><div class="step-who">박성수 회계사</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP CARDS -->
+<div class="steps-section">
+  <div class="container">
+
+    <div class="step-card">
+      <div class="step-icon step-1">📋<span class="icon-num">01</span></div>
+      <div class="step-body">
+        <h3>개인투자조합 설립 신고</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>최의란 행정사</strong></span>
+          <span>⏱ 소요: <strong>2~4주</strong></span>
+        </div>
+        <p class="step-desc">중소벤처기업부에 개인투자조합 결성 등록을 신고합니다. 정관 작성, GP(업무집행조합원) 요건 확인, 조합원 명부·투자약정서 등 필수 서류를 준비하고 접수합니다.</p>
+        <ul class="task-list">
+          <li>정관 작성·검토</li>
+          <li>GP 요건 확인</li>
+          <li>투자약정서 작성</li>
+          <li>조합원 명부 정비</li>
+          <li>설립 신고서 접수</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-icon step-2">✅<span class="icon-num">02</span></div>
+      <div class="step-body">
+        <h3>벤처기업 인증</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>최의란 행정사</strong></span>
+          <span>⏱ 소요: <strong>2~6주</strong></span>
+        </div>
+        <p class="step-desc">투자 대상 기업의 벤처기업 인증을 진행합니다. 혁신성장유형 또는 벤처투자유형 중 적합한 방식을 선정하고, 기업부설연구소 인증 등 관련 인증도 함께 지원합니다.</p>
+        <ul class="task-list">
+          <li>인증 유형 분석</li>
+          <li>벤처기업 인증 신청</li>
+          <li>기업부설연구소 인증</li>
+          <li>직접생산확인증명</li>
+          <li>여성기업 인증</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-icon step-3">📊<span class="icon-num">03</span></div>
+      <div class="step-body">
+        <h3>기장·결산</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>박성수 회계사</strong></span>
+          <span>⏱ 소요: <strong>상시 (연간)</strong></span>
+        </div>
+        <p class="step-desc">조합의 투자금 집행, 수익·비용 등 재무활동을 체계적으로 기장하고, 회계연도 종료 시 결산 재무제표를 작성합니다. 투자금 사용처 관리와 조합원별 지분 변동도 추적합니다.</p>
+        <ul class="task-list">
+          <li>투자금 집행 기장</li>
+          <li>수익·비용 관리</li>
+          <li>결산 재무제표 작성</li>
+          <li>투자금 사용처 실사</li>
+          <li>조합원 지분 변동 추적</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-icon step-4">🔍<span class="icon-num">04</span></div>
+      <div class="step-body">
+        <h3>외부감사</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>박성수 회계사</strong></span>
+          <span>⏱ 소요: <strong>2~4주</strong></span>
+        </div>
+        <p class="step-desc">법정 요건에 해당하는 조합에 대해 독립적인 외부감사를 수행합니다. 감사 보고서 발행, 내부통제 검토, 투자 자산 실사 등을 통해 조합 운영의 투명성을 확보합니다.</p>
+        <ul class="task-list">
+          <li>감사 대상 여부 확인</li>
+          <li>감사 계획 수립</li>
+          <li>투자 자산 실사</li>
+          <li>내부통제 검토</li>
+          <li>감사 보고서 발행</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-icon step-5">💰<span class="icon-num">05</span></div>
+      <div class="step-body">
+        <h3>세무신고·소득공제</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>박성수 회계사</strong></span>
+          <span>⏱ 소요: <strong>연 1회 (5월 종합소득세)</strong></span>
+        </div>
+        <p class="step-desc">조합원(LP)별 종합소득세 신고를 대행하고, 조세특례제한법 제16조에 따른 벤처투자 소득공제를 적용합니다. 투자금액·보유기간·벤처기업 요건 충족 여부를 개인별로 검증합니다.</p>
+        <ul class="task-list">
+          <li>LP별 소득공제 계산</li>
+          <li>종합소득세 신고</li>
+          <li>벤처투자 소득공제 적용</li>
+          <li>조세조약 검토 (외국인 LP)</li>
+          <li>세제 컨설팅</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-icon step-6">⚖️<span class="icon-num">06</span></div>
+      <div class="step-body">
+        <h3>조합원 배분·청산</h3>
+        <div class="step-meta">
+          <span>👤 담당: <strong>박성수 회계사</strong></span>
+          <span>⏱ 소요: <strong>4~8주</strong></span>
+        </div>
+        <p class="step-desc">투자 회수 시 조합원별 배분 비율을 산정하고, 조합 청산 절차를 진행합니다. 양도소득세 비과세 요건 충족 여부를 확인하고, 최종 청산 보고서를 작성합니다.</p>
+        <ul class="task-list">
+          <li>조합원별 배분 계산</li>
+          <li>양도소득세 비과세 요건 검토</li>
+          <li>청산 재무제표 작성</li>
+          <li>잔여재산 분배</li>
+          <li>청산 신고 및 완료</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="container" style="max-width:760px;">
+    <h2>업무 절차 자주 묻는 질문</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">전체 과정을 한 팀이 다 맡아주나요?<span class="arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">네, 큐브파트너스는 행정사(최의란)·회계사(박성수)·변호사로 구성된 전문가 팀이 설립부터 청산까지 전 주기를 일관되게 관리합니다. 단계별로 다른 업체를 찾아다닐 필요 없이, 하나의 창구에서 모든 업무를 처리할 수 있습니다.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">조합 설립부터 첫 투자까지 얼마나 걸리나요?<span class="arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">일반적으로 설립 신고에 2~4주, 벤처기업 인증에 2~6주 정도 소요됩니다. 모든 서류가 준비된 경우 빠르면 4주 이내에 투자 가능한 상태가 됩니다. 다만 투자 대상 기업의 벤처인증 상태에 따라 일정이 달라질 수 있습니다.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">이미 다른 곳에서 설립한 조합도 기장·감사를 맡길 수 있나요?<span class="arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">물론입니다. 설립은 다른 곳에서 하셨더라도 기장, 결산, 외부감사, 세무신고, 배분·청산 등 이후 단계부터 저희가 맡아서 진행할 수 있습니다. 기존 자료를 검토한 후 인수 절차를 안내해 드립니다.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">비용은 어떻게 산정되나요?<span class="arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">조합 규모(출자금 총액, 조합원 수)와 필요한 서비스 범위에 따라 개별 견적을 드립니다. 초기 상담은 무료이며, 상담 후 구체적인 비용 안내를 받으실 수 있습니다. 설립부터 전체 과정을 함께하시면 패키지 할인도 적용됩니다.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">소득공제가 제대로 적용되지 않으면 어떻게 하나요?<span class="arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">소득공제 적용 전에 투자금액, 보유기간, 벤처기업 요건 등을 사전 검증하기 때문에 적용 오류가 발생할 가능성은 매우 낮습니다. 만약 세무서에서 추가 소명 요청이 있을 경우, 조합 운영 자료와 투자 확인서를 근거로 대응 지원을 해드립니다.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>업무 절차가 궁금하신가요?</h2>
+  <p>조합 상황에 맞는 구체적인 진행 일정과 비용을 무료 상담에서 안내해 드립니다.</p>
+  <a href="cubepartners.html" class="cta-btn">무료 상담 신청하기</a>
+  <p class="cta-phone">📞 010-3693-4303 · nicedrive@naver.com</p>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-logo">큐브<span>파트너스</span></div><div class="footer-desc">개인투자조합 전문 세무·회계·행정 서비스</div></div>
+      <div class="footer-links"><a href="cubepartners.html">홈</a><a href="about.html">전문가 소개</a><a href="insight.html">인사이트</a><a href="board.html">문의</a><a href="process.html">업무 절차</a><a href="cubepartners.html#faq">FAQ</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 큐브파트너스. All rights reserved.</p><p>대표: 박성수 | 010-3693-4303</p></div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var answer = item.querySelector('.faq-a');
+  var isOpen = item.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(function(f) {
+    f.classList.remove('open');
+    f.querySelector('.faq-a').style.maxHeight = '0';
+  });
+
+  // Open clicked (if was closed)
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+</script>
+</body>
+</html>
