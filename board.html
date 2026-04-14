@@ -193,6 +193,7 @@ footer { background: #0a1a3a; color: #ccd3e0; padding: 48px 0 32px; margin-top: 
 <div class="tab-bar">
   <div class="tab-inner">
     <button class="tab-btn active" onclick="switchTab('write', this)">✏️ 문의 작성</button>
+    <button class="tab-btn" onclick="switchTab('public', this)">📋 공개 문의</button>
     <button class="tab-btn" onclick="switchTab('check', this)">🔍 내 문의 확인</button>
     <button class="tab-btn" id="adminTabBtn" onclick="openAdminLogin()" style="margin-left:auto; font-size:12px; color:var(--text-light);">🔐 관리자</button>
   </div>
@@ -242,9 +243,27 @@ footer { background: #0a1a3a; color: #ccd3e0; padding: 48px 0 32px; margin-top: 
         <label>연락처 (선택)</label>
         <input type="text" id="inqContact" placeholder="이메일 또는 전화번호 (빠른 회신을 원하시면)">
       </div>
+      <div class="form-row">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+          <input type="checkbox" id="inqPrivate" checked style="width:16px; height:16px; accent-color:var(--indigo); cursor:pointer;">
+          <span>비밀 문의 (나와 관리자만 볼 수 있음)</span>
+        </label>
+        <div class="form-hint">체크 해제 시 다른 방문자도 문의 내용을 볼 수 있습니다</div>
+      </div>
       <div style="text-align:right; margin-top:8px;">
         <button class="btn-primary" id="submitBtn" onclick="submitInquiry()">문의 등록</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB: PUBLIC ==================== -->
+  <div id="tabPublic" style="display:none;">
+    <div style="margin-bottom:20px;">
+      <h3 style="font-family:'Noto Serif KR',serif; font-size:18px; color:var(--navy); margin-bottom:8px;">공개 문의</h3>
+      <p style="font-size:13px; color:var(--text-muted);">공개로 등록된 문의와 답변을 확인하실 수 있습니다.</p>
+    </div>
+    <div id="publicInquiryList">
+      <div class="loading"><div class="spinner"></div></div>
     </div>
   </div>
 
@@ -381,9 +400,11 @@ function switchTab(tab, el) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   if (el) el.classList.add('active');
   document.getElementById('tabWrite').style.display = tab === 'write' ? 'block' : 'none';
+  document.getElementById('tabPublic').style.display = tab === 'public' ? 'block' : 'none';
   document.getElementById('tabCheck').style.display = tab === 'check' ? 'block' : 'none';
   document.getElementById('tabAdmin').style.display = tab === 'admin' ? 'block' : 'none';
   if (tab === 'admin') loadAdminInquiries();
+  if (tab === 'public') loadPublicInquiries();
 }
 
 // ── Submit Inquiry ──
@@ -394,6 +415,7 @@ async function submitInquiry() {
   const title = document.getElementById('inqTitle').value.trim();
   const content = document.getElementById('inqContent').value.trim();
   const contact = document.getElementById('inqContact').value.trim();
+  const isPrivate = document.getElementById('inqPrivate').checked;
 
   if (!nickname || !password || !title || !content) {
     alert('닉네임, 비밀번호, 제목, 내용은 필수입니다.');
@@ -417,6 +439,7 @@ async function submitInquiry() {
       title: title,
       content: content,
       contact: contact,
+      isPrivate: isPrivate,
       status: 'waiting',
       reply: '',
       repliedAt: null,
@@ -430,6 +453,7 @@ async function submitInquiry() {
     document.getElementById('inqContent').value = '';
     document.getElementById('inqContact').value = '';
     document.getElementById('inqType').selectedIndex = 0;
+    document.getElementById('inqPrivate').checked = true;
 
     // Show success
     document.getElementById('successMsg').style.display = 'block';
@@ -458,7 +482,6 @@ async function checkMyInquiries() {
     const snap = await db.collection('inquiries')
       .where('nickname', '==', nickname)
       .where('passwordHash', '==', pwHash)
-      .orderBy('createdAt', 'desc')
       .get();
 
     if (snap.empty) {
@@ -466,21 +489,29 @@ async function checkMyInquiries() {
       return;
     }
 
+    // Sort client-side (newest first)
+    const docs = [];
+    snap.forEach(doc => docs.push({ id: doc.id, data: doc.data() }));
+    docs.sort((a, b) => {
+      const ta = a.data.createdAt ? a.data.createdAt.toMillis() : 0;
+      const tb = b.data.createdAt ? b.data.createdAt.toMillis() : 0;
+      return tb - ta;
+    });
+
     let html = '';
-    snap.forEach(doc => {
-      const d = doc.data();
+    docs.forEach(({ id, data: d }) => {
       const date = d.createdAt ? d.createdAt.toDate().toLocaleDateString('ko-KR') : '';
       const statusClass = d.status === 'replied' ? 'status-replied' : 'status-waiting';
       const statusText = d.status === 'replied' ? '답변 완료' : '대기 중';
       html += `
-        <div class="inquiry-item" onclick="toggleDetail('my_${doc.id}')">
+        <div class="inquiry-item" onclick="toggleDetail('my_${id}')">
           <div class="inquiry-header">
             <span class="inquiry-title">${escHtml(d.title)}</span>
             <span class="inquiry-status ${statusClass}">${statusText}</span>
           </div>
           <div class="inquiry-meta">${date} · ${getTypeName(d.type)}</div>
         </div>
-        <div class="inquiry-detail" id="my_${doc.id}">
+        <div class="inquiry-detail" id="my_${id}">
           <div class="detail-body">${escHtml(d.content)}</div>
           ${d.reply ? `<div class="reply-box"><h4>📝 큐브파트너스 답변</h4><p>${escHtml(d.reply)}</p></div>` : '<p style="font-size:13px; color:var(--text-light);">아직 답변이 등록되지 않았습니다.</p>'}
         </div>`;
@@ -489,6 +520,55 @@ async function checkMyInquiries() {
   } catch (err) {
     console.error(err);
     listEl.innerHTML = '<div class="empty-state"><p>조회에 실패했습니다. 잠시 후 다시 시도해 주세요.</p></div>';
+  }
+}
+
+// ── Load Public Inquiries ──
+async function loadPublicInquiries() {
+  const listEl = document.getElementById('publicInquiryList');
+  listEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  try {
+    const snap = await db.collection('inquiries')
+      .where('isPrivate', '==', false)
+      .get();
+
+    if (snap.empty) {
+      listEl.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>아직 공개 문의가 없습니다.</p></div>';
+      return;
+    }
+
+    // Sort client-side (newest first)
+    const docs = [];
+    snap.forEach(doc => docs.push({ id: doc.id, data: doc.data() }));
+    docs.sort((a, b) => {
+      const ta = a.data.createdAt ? a.data.createdAt.toMillis() : 0;
+      const tb = b.data.createdAt ? b.data.createdAt.toMillis() : 0;
+      return tb - ta;
+    });
+
+    let html = '';
+    docs.forEach(({ id, data: d }) => {
+      const date = d.createdAt ? d.createdAt.toDate().toLocaleDateString('ko-KR') : '';
+      const statusClass = d.status === 'replied' ? 'status-replied' : 'status-waiting';
+      const statusText = d.status === 'replied' ? '답변 완료' : '대기 중';
+      html += `
+        <div class="inquiry-item" onclick="toggleDetail('pub_${id}')">
+          <div class="inquiry-header">
+            <span class="inquiry-title">${escHtml(d.title)}</span>
+            <span class="inquiry-status ${statusClass}">${statusText}</span>
+          </div>
+          <div class="inquiry-preview">${escHtml(d.nickname)} · ${date} · ${getTypeName(d.type)}</div>
+        </div>
+        <div class="inquiry-detail" id="pub_${id}">
+          <div class="detail-body">${escHtml(d.content)}</div>
+          ${d.reply ? `<div class="reply-box"><h4>📝 큐브파트너스 답변</h4><p>${escHtml(d.reply)}</p></div>` : '<p style="font-size:13px; color:var(--text-light);">아직 답변이 등록되지 않았습니다.</p>'}
+        </div>`;
+    });
+    listEl.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    listEl.innerHTML = '<div class="empty-state"><p>목록을 불러오지 못했습니다.</p></div>';
   }
 }
 
@@ -564,7 +644,7 @@ async function loadAdminInquiries() {
               <span class="inquiry-status ${statusClass}">${statusText}</span>
             </div>
           </div>
-          <div class="inquiry-preview">${escHtml(d.nickname)} · ${date} · ${getTypeName(d.type)}${d.contact ? ' · ' + escHtml(d.contact) : ''}</div>
+          <div class="inquiry-preview">${d.isPrivate !== false ? '🔒 비밀' : '🌐 공개'} · ${escHtml(d.nickname)} · ${date} · ${getTypeName(d.type)}${d.contact ? ' · ' + escHtml(d.contact) : ''}</div>
         </div>
         <div class="inquiry-detail" id="adm_${doc.id}">
           <div class="detail-body">${escHtml(d.content)}</div>
