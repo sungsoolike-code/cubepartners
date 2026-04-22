@@ -310,7 +310,8 @@ firebase.initializeApp({
   messagingSenderId: "280512269415",
   appId: "1:280512269415:web:14d96b02be77707e4458c2"
 });
-var db = firebase.firestore(), auth = firebase.auth(), isAdmin = false;
+var db = firebase.firestore(), auth = firebase.auth(), isAdmin = false, currentUserEmail = '';
+function getDefaultAuthor(){return currentUserEmail==='lan103@naver.com'?'최의란 행정사':'박성수 회계사';}
 var catCfg = { tax:{n:'세무·절세',bg:'#eef2ff',em:'💰'}, setup:{n:'설립·인증',bg:'#e8f5e9',em:'📋'}, audit:{n:'감사·결산',bg:'#fff3e0',em:'🔍'}, news:{n:'법령 개정',bg:'#fce4ec',em:'📰'}, qa:{n:'Q&A',bg:'#f3e5f5',em:'💼'} };
 
 function esc(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''}
@@ -347,15 +348,15 @@ async function adminLogin(){
 }
 function adminLogout(){auth.signOut();}
 auth.onAuthStateChanged(function(u){
-  if(u){isAdmin=true;document.getElementById('adminBar').style.display='block';document.getElementById('adminName').textContent=u.email;document.getElementById('writeBtn').style.display='block';document.getElementById('adminLoginLink').style.display='none';loadFirebaseArticles();}
-  else{isAdmin=false;document.getElementById('adminBar').style.display='none';document.getElementById('writeBtn').style.display='none';document.getElementById('adminLoginLink').style.display='block';loadFirebaseArticles();}
+  if(u){isAdmin=true;currentUserEmail=u.email||'';document.getElementById('adminBar').style.display='block';document.getElementById('adminName').textContent=u.email;document.getElementById('writeBtn').style.display='block';document.getElementById('adminLoginLink').style.display='none';loadFirebaseArticles();}
+  else{isAdmin=false;currentUserEmail='';document.getElementById('adminBar').style.display='none';document.getElementById('writeBtn').style.display='none';document.getElementById('adminLoginLink').style.display='block';loadFirebaseArticles();}
 });
 
 function openWriteModal(){
   document.getElementById('editDocId').value='';
   document.getElementById('writeModalTitle').textContent='✏️ 새 글 작성';
   document.getElementById('articleCat').value='tax';
-  document.getElementById('articleAuthor').value='박성수 회계사';
+  document.getElementById('articleAuthor').value=getDefaultAuthor();
   document.getElementById('articleEmoji').value='📝';
   document.getElementById('articleDate').value=new Date().toISOString().split('T')[0];
   document.getElementById('articleTitle').value='';
@@ -387,7 +388,7 @@ async function publishArticle(){
   if(!title||!summary){alert('제목과 요약은 필수입니다.');return;}
   var dateVal=document.getElementById('articleDate').value;
   var dateStr=dateVal?dateVal.replace(/-/g,'. ')+'.':new Date().toLocaleDateString('ko-KR');
-  var data={category:document.getElementById('articleCat').value,author:document.getElementById('articleAuthor').value.trim()||'박성수 회계사',emoji:document.getElementById('articleEmoji').value.trim()||'📝',date:dateStr,dateRaw:dateVal,title:title,summary:summary,body:document.getElementById('articleBody').value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  var data={category:document.getElementById('articleCat').value,author:document.getElementById('articleAuthor').value.trim()||getDefaultAuthor(),emoji:document.getElementById('articleEmoji').value.trim()||'📝',date:dateStr,dateRaw:dateVal,title:title,summary:summary,body:document.getElementById('articleBody').value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
   var docId=document.getElementById('editDocId').value;
   try{
     if(docId){await db.collection('articles').doc(docId).update(data);}
